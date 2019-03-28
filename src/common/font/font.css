@@ -1,0 +1,30 @@
+@font-face {  
+    font-family: 'Bold';  
+    src: url('Montserrat-Bold.ttf');  
+    font-weight: normal;  
+    font-style: normal;  
+}
+@font-face {  
+    font-family: 'Regular';  
+    src: url('Montserrat-Regular.ttf');  
+    font-weight: normal;  
+    font-style: normal;  
+}
+@font-face {  
+    font-family: 'regular';  
+    src: url('Poppins-Regular.ttf');  
+    font-weight: normal;  
+    font-style: normal;  
+}
+@font-face {  
+    font-family: 'blod';  
+    src: url('Poppins-Bold.otf');  
+    font-weight: normal;  
+    font-style: normal;  
+}
+@font-face {  
+    font-family: 'reg';  
+    src: url('ACaslonPro-Regular.otf');  
+    font-weight: normal;  
+    font-style: normal;  
+}
