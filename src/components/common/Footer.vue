@@ -97,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 .footer {
   width: 100%;
-  background-color: #f4d925;
+  background-color: #f4f4f4;
   font-family: "Regular";
 }
 .h_footerTop1 {

@@ -282,19 +282,14 @@ export default {
   position: absolute;
   right: 0;
   top: 130px;
-  background-color: #e8e316;
-  font-size: 16px;
+  color: #e8e316;
+  font-size: .16rem;
   font-family: "regular";
   font-weight: bold;
-  height: 40px;
-  line-height: 40px;
-  width: 100px;
-  text-align: center;
-  border-radius: 3px;
   cursor: pointer;
   text-transform: uppercase;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .ell-container {
     width: 90%;
   }
@@ -306,18 +301,20 @@ export default {
   .back {
   position: absolute;
   right: 0;
-  top: 170px;
-  background-color: #e8e316;
-  font-size: 16px;
+  top: 2rem;
+  color: #e8e316;
+  font-size: .16rem;
   font-family: "regular";
   font-weight: bold;
-  height: 40px;
-  line-height: 40px;
-  width: 100px;
-  text-align: center;
-  border-radius: 3px;
   cursor: pointer;
   text-transform: uppercase;
+}
+}
+@media screen and (max-width: 768px) {
+  .back {
+  position: absolute;
+  right: 0;
+  top: 2.6rem;
 }
   .ell-btn {
     margin-bottom: 1vh;

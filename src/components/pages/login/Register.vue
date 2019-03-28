@@ -331,7 +331,7 @@ export default {
   cursor: pointer;
   text-transform:uppercase;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .ell-container {
     padding-top: 1rem;
     width: 90%;

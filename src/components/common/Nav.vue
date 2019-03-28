@@ -337,6 +337,8 @@ export default {
 }
 .nav {
   width: 100%;
+  display: flex;
+  justify-content: center;
   .dropdown1 {
     width: 700px;
     height: 400px;
@@ -347,7 +349,7 @@ export default {
     box-sizing: border-box;
     position: absolute;
     left: 15%;
-    top: .8rem;
+        top: .65rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
@@ -467,7 +469,7 @@ export default {
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    top: .8rem;
+      top: .65rem;
     left: 30%;
     z-index: 99999;
     overflow: hidden;
@@ -588,7 +590,7 @@ export default {
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    top: .8rem;
+       top: .65rem;
     left: 40%;
     z-index: 99999;
     overflow: hidden;
@@ -709,7 +711,7 @@ export default {
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    top: .8rem;
+    top: .65rem;
     left: 50%;
     z-index: 99999;
     overflow: hidden;
@@ -830,7 +832,7 @@ export default {
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    top: .8rem;
+    top: .65rem;
     left: 60%;
     z-index: 99999;
     overflow: hidden;
@@ -947,9 +949,9 @@ export default {
     position: relative;
     background-color: #eae62d;
     color: #231815;
-    font-size: 16px;
+    font-size: .16rem;
     // box-sizing: border-box;
-    height: .8rem;
+    height: .65rem;
     display: flex;
     justify-content: center;
     &.isFixed {
@@ -958,23 +960,25 @@ export default {
       z-index: 9999;
     }
     .nav_pc {
-      height: .8rem;
+      width: 13rem;
+      height: .65rem;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       box-sizing: border-box;
       .logo {
-        height: .70rem;
-        width: 1.5rem;
+        height: .5rem;
+        width: 1.3rem;
         cursor: pointer;
       }
       .h_navCenter {
-        height: .80rem;
-        line-height: .80rem;
+        height: .65rem;
+        line-height: .65rem;
         box-sizing: border-box;
         display: flex;
         font-family: "Regular";
         font-weight: 500;
-        font-size: 16px;
+        font-size: .16rem;
         color: #231815;
         .search {
           width: 100%;
@@ -1003,7 +1007,7 @@ export default {
           }
         }
         span {
-          margin-left: 1.2rem;
+          margin-left: .8rem;
           color: #231815;
           cursor: pointer;
           position: relative;
@@ -1029,12 +1033,12 @@ export default {
       }
       .h_navRight {
         display: flex;
-        margin-left: 100px;
+        margin-left: 1rem;
         img {
           cursor: pointer;
-          margin-left: 20px;
-          height: 20px;
-          width: 20px;
+          margin-left: .2rem;
+          height: .20rem;
+          width: .20rem
         }
       }
     }
@@ -1053,19 +1057,22 @@ export default {
     .nav_iphone {
       width: 100%;
       height: 0.8rem;
+      padding: .2rem;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
+      justify-content: space-around;
       box-sizing: border-box;
       .logo {
         margin-left: 0.2rem;
-        height: 0.6rem;
-        width: 1.5rem;
+        height: 0.5rem;
+        width: 1.3rem;
         cursor: pointer;
       }
       .gengduo {
         margin-left: 0.2rem;
-        height: 0.3rem;
-        width: 0.4rem;
+        height: 0.25rem;
+        width: 0.35rem;
       }
       .input {
         margin-left: 0.2rem;
@@ -1079,8 +1086,8 @@ export default {
           width: 2rem;
         }
         img {
-          height: 0.3rem;
-          width: 0.3rem;
+          height: 0.2rem;
+          width: 0.2rem;
         }
       }
       .h_navRight {
@@ -1089,8 +1096,8 @@ export default {
         img {
           cursor: pointer;
           margin-left: 0.2rem;
-          height: 0.3rem;
-          width: 0.3rem;
+          height: 0.25rem;
+          width: 0.25rem;
         }
       }
     }

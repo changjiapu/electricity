@@ -20,7 +20,7 @@ export default {
     };
   },
   created() {
-    //获取当前设备的屏幕宽度，以及rem适配移动端设置
+
     // let widthH = document.documentElement.clientWidth;
     // let heightH = document.documentElement.clientHeight;
     // this.$root.widthH = widthH;
@@ -55,6 +55,7 @@ export default {
     }
   },
   mounted() {
+        //获取当前设备的屏幕宽度，以及rem响应式适配
     let widthH = document.documentElement.clientWidth;
     let heightH = document.documentElement.clientHeight;
     this.$root.widthH = widthH;

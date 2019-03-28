@@ -149,7 +149,7 @@ export default {
   border: 1px solid #34a123;
   color: #34a123;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .ell-container {
     width: 90%;
   }
