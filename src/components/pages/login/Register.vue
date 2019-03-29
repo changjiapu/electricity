@@ -139,6 +139,19 @@ export default {
           this.errTxt += `Please make sure your passwords match.`;
         }
       }
+       if (!this.show) {
+          var reg=/^[0-9]*$/ 
+          if(reg.test(this.password)){
+          this.show = true;
+          this.errTxt += `Passwords can't be all Numbers`;
+          }
+      }
+          if (!this.show) {
+          if(this.password.length<6){
+          this.show = true;
+          this.errTxt += `Password state is less than 6 bits`;
+          }
+      }
       if (!this.show) {
         let postData = {
           userEmail: this.email,
@@ -315,23 +328,29 @@ export default {
   padding: 10px 0;
   color: red;
 }
-.back{
+.back {
   position: absolute;
   right: 0;
-  top:130px;
-  background-color: #e8e316;
-  font-size: 16px;
-  font-family: 'regular';
+  top: 130px;
+  color: #e8e316;
+  font-size: .16rem;
+  font-family: "regular";
   font-weight: bold;
-  height: 40px;
-  line-height: 40px;
-  width: 100px;
-  text-align: center;
-  border-radius: 3px;
   cursor: pointer;
-  text-transform:uppercase;
+  text-transform: uppercase;
 }
 @media screen and (max-width: 1024px) {
+    .back {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  color: #e8e316;
+  font-size: .16rem;
+  font-family: "regular";
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+}
   .ell-container {
     padding-top: 1rem;
     width: 90%;
@@ -467,5 +486,12 @@ export default {
     width: 3rem;
     height: 1.2rem;
   }
+}
+@media screen and (max-width: 768px) {
+  .back {
+  position: absolute;
+  right: 0;
+  top: 2.6rem;
+}
 }
 </style>
