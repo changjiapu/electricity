@@ -23,7 +23,7 @@ new Vue({
     return {
       heightH:'',
       widthH: "", //当前设备的屏幕宽度
-      imgUrl:'http://114.115.211.170:8080/web/file/showPicture?imageId='  //图片前缀
+      imgUrl:'https://www.jimhalo.com/web/file/showPicture?imageId='  //图片前缀
     }
   },
   mounted(){

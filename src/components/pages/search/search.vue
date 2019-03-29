@@ -388,6 +388,27 @@ export default {
         this.productList = response.data.data.list;
       });
     });
+    //监听nav中子类的点击事件
+    this.bus.$on("jump", (data, data2) => {
+      console.log(data, data2);
+      this.tabId = data;
+      let params = {
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
+        sorting: this.sorting, //排序
+        endPrice: this.sliderPrice[1] || "",
+        startPrice: this.sliderPrice[0] || "",
+        lidList: this.lidList, //
+        categoryId: data2, //商品分类id
+        disType: this.discount,
+        taId: data //趋势id
+      };
+      getListData(params).then(response => {
+        this.productList = [];
+        this.total = response.data.data.total;
+        this.productList = response.data.data.list;
+      });
+    });
     this.getFaceData(); //标签获取
     this.getSort();
     this.geCategory(); //类别获取
@@ -497,7 +518,7 @@ export default {
     //类别数据获取
     geCategory() {
       getProductCategory().then(res => {
-        this.side_list1 = res.data.data;
+        this.side_list1 = res.data.data.cateGories;
       });
     },
     //获取标签

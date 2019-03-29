@@ -40,6 +40,30 @@
               :class="{'clickBg':index==clickIndex,'hoverBg':index==hoverIndex}"
             >{{item.categoryName}}</span>
           </div>
+          <div class="img_list">
+            <div
+              class="img_item"
+              v-for="(item,index) in menuList2"
+              :key="index"
+              @click="jump(item.valueId,currrntTab)"
+            >
+              <img :src="imgUrl+item.paramImage" alt>
+              <span>{{item.paramValue}}</span>
+            </div>
+          </div>
+          <div class="activity">
+            <img src="../../assets/product-detail/tupian3.png" alt>
+          </div>
+        </div>
+      </div>
+      <div v-if="currrntTab==3" class="dropdown4">
+        <div class="menu">
+          <div class="activity">
+            <img src="../../assets/product-detail/tupian3.png" alt>
+          </div>
+          <div class="activity">
+            <img src="../../assets/product-detail/tupian3.png" alt>
+          </div>
         </div>
       </div>
     </div>
@@ -92,6 +116,7 @@ export default {
   name: "nav",
   data() {
     return {
+      imgUrl: "",
       showSearch: false,
       searchInput: "",
       widthH: "",
@@ -126,7 +151,7 @@ export default {
     };
   },
   created() {
-    this.widthH = this.$root.widthH;
+    (this.imgUrl = this.$root.imgUrl), (this.widthH = this.$root.widthH);
     this.getProductCategory();
   },
   mounted() {
@@ -142,11 +167,14 @@ export default {
     getProductCategory() {
       getProductCategory().then(res => {
         if (res.data.code == 0) {
-          res.data.data.forEach(item => {
+          res.data.data.cateGories.forEach(item => {
             Object.assign(item, { url: "/search" });
           });
-          console.log(res.data.data);
-          this.menuList = [...res.data.data, ...this.menuList];
+          this.menuList = [...res.data.data.cateGories, ...this.menuList];
+          res.data.data.params.forEach(item => {
+            Object.assign(item, { url: "/search" });
+          });
+          this.menuList2 = res.data.data.params;
         }
       });
     },
@@ -232,6 +260,7 @@ export default {
     //菜单左侧导航跳转
     jump(id, tabId) {
       this.index_10 = false;
+      this.bus.$emit("jump", id, tabId);
       this.$router.push({
         name: "/search",
         params: {
@@ -277,7 +306,7 @@ export default {
         return "dropdown5";
       }
     },
-        screenWidth() {
+    screenWidth() {
       return this.$root.widthH;
     }
   },
@@ -300,7 +329,7 @@ export default {
     height: 0px;
   }
   to {
-    height: 400px;
+    height: 3rem;
   }
 }
 @keyframes slowDown2 {
@@ -308,7 +337,7 @@ export default {
     height: 0px;
   }
   to {
-    height: 400px;
+    height: 3rem;
   }
 }
 @keyframes slowDown3 {
@@ -316,7 +345,7 @@ export default {
     height: 0px;
   }
   to {
-    height: 400px;
+    height: 3rem;
   }
 }
 @keyframes slowDown4 {
@@ -324,24 +353,17 @@ export default {
     height: 0px;
   }
   to {
-    height: 400px;
+    height: 3rem;
   }
 }
-@keyframes slowDown5 {
-  from {
-    height: 0px;
-  }
-  to {
-    height: 400px;
-  }
-}
+
 .nav {
   width: 100%;
   display: flex;
   justify-content: center;
   .dropdown1 {
-    width: 700px;
-    height: 400px;
+    // width: 700px;
+    height: 3rem;
     box-shadow: 2px 2px 2px #999999;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 1);
@@ -349,13 +371,14 @@ export default {
     box-sizing: border-box;
     position: absolute;
     left: 15%;
-        top: .65rem;
+    top: 0.65rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
     .menu {
-      height: 400px;
+      height: 3rem;
       width: 100%;
+      display: flex;
       .menuBigLeft {
         width: 200px;
         background-color: rgba(255, 255, 255, 0.9);
@@ -383,100 +406,60 @@ export default {
           background-color: #999999;
         }
       }
-      .menuBigCenter {
-        .shopList {
-          line-height: 40px;
-          span {
-            margin-right: 20px;
-            color: #666666;
-            cursor: pointer;
-            &.activeColor {
-              color: #231815;
-            }
-          }
-        }
-        .shopNameList {
-          width: 100%;
+      .img_list {
+        box-sizing: border-box;
+        background-color: #eeeeee;
+        width: 400px;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.2rem;
+        color: #231815;
+        font-family: "regular";
+        .img_item {
+          height: 1rem;
+          // width: 80px;
+          margin-left: 0.2rem;
           display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          span {
-            display: inline-block;
-            border: 1px solid #666666;
-            color: #666666;
-            padding: 0px 10px;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &.activeBorder {
-              border: 1px solid #231815;
-              color: #231815;
-            }
-          }
-        }
-        .yanjingList {
-          display: flex;
-          justify-content: flex-start;
-          .yanjing {
-            margin-right: 20px;
-            text-align: center;
-            cursor: pointer;
-            p {
-              height: 20px;
-            }
-            img {
-              width: 80px;
-              height: 80px;
-            }
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          img {
+            height: 0.4rem;
+            width: 0.4rem;
           }
         }
       }
-      .menuBigRight {
-        ul {
-          li {
-            display: block;
-            width: 80%;
-            padding-bottom: 14px;
-            position: relative;
-            span {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              left: 50%;
-              transform: translateX(-50%);
-              bottom: 10px;
-              padding-bottom: 14px;
-              color: #fff;
-            }
-            img {
-              display: block;
-              width: 300px;
-              height: 150px;
-            }
-          }
+      .activity {
+        height: 100%;
+        width: 3rem;
+        cursor: pointer;
+        img {
+          height: 100%;
+          width: 100%;
         }
       }
     }
   }
   .dropdown2 {
-    width: 700px;
-    height: 400px;
+    // width: 700px;
+    height: 3rem;
     box-shadow: 2px 2px 2px #999999;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 1);
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-      top: .65rem;
     left: 30%;
+    top: 0.65rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
     .menu {
-      height: 400px;
+      height: 3rem;
       width: 100%;
+      display: flex;
       .menuBigLeft {
         width: 200px;
         background-color: rgba(255, 255, 255, 0.9);
@@ -504,100 +487,60 @@ export default {
           background-color: #999999;
         }
       }
-      .menuBigCenter {
-        .shopList {
-          line-height: 40px;
-          span {
-            margin-right: 20px;
-            color: #666666;
-            cursor: pointer;
-            &.activeColor {
-              color: #231815;
-            }
-          }
-        }
-        .shopNameList {
-          width: 100%;
+      .img_list {
+        box-sizing: border-box;
+        background-color: #eeeeee;
+        width: 400px;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.2rem;
+        color: #231815;
+        font-family: "regular";
+        .img_item {
+          height: 1rem;
+          // width: 80px;
+          margin-left: 0.2rem;
           display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          span {
-            display: inline-block;
-            border: 1px solid #666666;
-            color: #666666;
-            padding: 0px 10px;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &.activeBorder {
-              border: 1px solid #231815;
-              color: #231815;
-            }
-          }
-        }
-        .yanjingList {
-          display: flex;
-          justify-content: flex-start;
-          .yanjing {
-            margin-right: 20px;
-            text-align: center;
-            cursor: pointer;
-            p {
-              height: 20px;
-            }
-            img {
-              width: 80px;
-              height: 80px;
-            }
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          img {
+            height: 0.4rem;
+            width: 0.4rem;
           }
         }
       }
-      .menuBigRight {
-        ul {
-          li {
-            display: block;
-            width: 80%;
-            padding-bottom: 14px;
-            position: relative;
-            span {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              left: 50%;
-              transform: translateX(-50%);
-              bottom: 10px;
-              padding-bottom: 14px;
-              color: #fff;
-            }
-            img {
-              display: block;
-              width: 300px;
-              height: 150px;
-            }
-          }
+      .activity {
+        height: 100%;
+        width: 3rem;
+        cursor: pointer;
+        img {
+          height: 100%;
+          width: 100%;
         }
       }
     }
   }
   .dropdown3 {
-    width: 700px;
-    height: 400px;
+    // width: 700px;
+    height: 3rem;
     box-shadow: 2px 2px 2px #999999;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 1);
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-       top: .65rem;
-    left: 40%;
+    left: 45%;
+    top: 0.65rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
     .menu {
-      height: 400px;
+      height: 3rem;
       width: 100%;
+      display: flex;
       .menuBigLeft {
         width: 200px;
         background-color: rgba(255, 255, 255, 0.9);
@@ -625,100 +568,60 @@ export default {
           background-color: #999999;
         }
       }
-      .menuBigCenter {
-        .shopList {
-          line-height: 40px;
-          span {
-            margin-right: 20px;
-            color: #666666;
-            cursor: pointer;
-            &.activeColor {
-              color: #231815;
-            }
-          }
-        }
-        .shopNameList {
-          width: 100%;
+      .img_list {
+        box-sizing: border-box;
+        background-color: #eeeeee;
+        width: 400px;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.2rem;
+        color: #231815;
+        font-family: "regular";
+        .img_item {
+          height: 1rem;
+          // width: 80px;
+          margin-left: 0.2rem;
           display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          span {
-            display: inline-block;
-            border: 1px solid #666666;
-            color: #666666;
-            padding: 0px 10px;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &.activeBorder {
-              border: 1px solid #231815;
-              color: #231815;
-            }
-          }
-        }
-        .yanjingList {
-          display: flex;
-          justify-content: flex-start;
-          .yanjing {
-            margin-right: 20px;
-            text-align: center;
-            cursor: pointer;
-            p {
-              height: 20px;
-            }
-            img {
-              width: 80px;
-              height: 80px;
-            }
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          img {
+            height: 0.4rem;
+            width: 0.4rem;
           }
         }
       }
-      .menuBigRight {
-        ul {
-          li {
-            display: block;
-            width: 80%;
-            padding-bottom: 14px;
-            position: relative;
-            span {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              left: 50%;
-              transform: translateX(-50%);
-              bottom: 10px;
-              padding-bottom: 14px;
-              color: #fff;
-            }
-            img {
-              display: block;
-              width: 300px;
-              height: 150px;
-            }
-          }
+      .activity {
+        height: 100%;
+        width: 3rem;
+        cursor: pointer;
+        img {
+          height: 100%;
+          width: 100%;
         }
       }
     }
   }
   .dropdown4 {
-    width: 700px;
-    height: 400px;
+    // width: 700px;
+    height: 3rem;
     box-shadow: 2px 2px 2px #999999;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 1);
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    top: .65rem;
     left: 50%;
+    top: 0.65rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
     .menu {
-      height: 400px;
+      height: 3rem;
       width: 100%;
+      display: flex;
       .menuBigLeft {
         width: 200px;
         background-color: rgba(255, 255, 255, 0.9);
@@ -746,200 +649,38 @@ export default {
           background-color: #999999;
         }
       }
-      .menuBigCenter {
-        .shopList {
-          line-height: 40px;
-          span {
-            margin-right: 20px;
-            color: #666666;
-            cursor: pointer;
-            &.activeColor {
-              color: #231815;
-            }
-          }
-        }
-        .shopNameList {
-          width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          span {
-            display: inline-block;
-            border: 1px solid #666666;
-            color: #666666;
-            padding: 0px 10px;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &.activeBorder {
-              border: 1px solid #231815;
-              color: #231815;
-            }
-          }
-        }
-        .yanjingList {
-          display: flex;
-          justify-content: flex-start;
-          .yanjing {
-            margin-right: 20px;
-            text-align: center;
-            cursor: pointer;
-            p {
-              height: 20px;
-            }
-            img {
-              width: 80px;
-              height: 80px;
-            }
-          }
-        }
-      }
-      .menuBigRight {
-        ul {
-          li {
-            display: block;
-            width: 80%;
-            padding-bottom: 14px;
-            position: relative;
-            span {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              left: 50%;
-              transform: translateX(-50%);
-              bottom: 10px;
-              padding-bottom: 14px;
-              color: #fff;
-            }
-            img {
-              display: block;
-              width: 300px;
-              height: 150px;
-            }
-          }
-        }
-      }
-    }
-  }
-  .dropdown5 {
-    width: 700px;
-    height: 400px;
-    box-shadow: 2px 2px 2px #999999;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 1);
-    padding: 0 10px;
-    box-sizing: border-box;
-    position: absolute;
-    top: .65rem;
-    left: 60%;
-    z-index: 99999;
-    overflow: hidden;
-    animation: slowDown1 0.7s;
-    .menu {
-      height: 400px;
-      width: 100%;
-      .menuBigLeft {
-        width: 200px;
-        background-color: rgba(255, 255, 255, 0.9);
-        display: flex;
-        flex-direction: column;
-        // flex-wrap: wrap;
-        overflow-y: scroll;
-        // justify-content: center;
-        padding-right: 30px;
+      .img_list {
+        box-sizing: border-box;
+        background-color: #eeeeee;
+        width: 400px;
         height: 100%;
-        font-size: 16px;
-        font-weight: bold;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.2rem;
+        color: #231815;
         font-family: "regular";
-        span {
-          text-align: center;
-          height: 60px;
-          line-height: 60px;
-          padding: 10px 20px;
+        .img_item {
+          height: 1rem;
+          // width: 80px;
+          margin-left: 0.2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
-        }
-        &.menuBigLeft::-webkit-scrollbar {
-          display: none;
-        }
-        span:hover {
-          background-color: #999999;
-        }
-      }
-      .menuBigCenter {
-        .shopList {
-          line-height: 40px;
-          span {
-            margin-right: 20px;
-            color: #666666;
-            cursor: pointer;
-            &.activeColor {
-              color: #231815;
-            }
+          img {
+            height: 0.4rem;
+            width: 0.4rem;
           }
         }
-        .shopNameList {
+      }
+      .activity {
+        height: 100%;
+        width: 3rem;
+        cursor: pointer;
+        img {
+          height: 100%;
           width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-          span {
-            display: inline-block;
-            border: 1px solid #666666;
-            color: #666666;
-            padding: 0px 10px;
-            margin-bottom: 20px;
-            margin-right: 10px;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &.activeBorder {
-              border: 1px solid #231815;
-              color: #231815;
-            }
-          }
-        }
-        .yanjingList {
-          display: flex;
-          justify-content: flex-start;
-          .yanjing {
-            margin-right: 20px;
-            text-align: center;
-            cursor: pointer;
-            p {
-              height: 20px;
-            }
-            img {
-              width: 80px;
-              height: 80px;
-            }
-          }
-        }
-      }
-      .menuBigRight {
-        ul {
-          li {
-            display: block;
-            width: 80%;
-            padding-bottom: 14px;
-            position: relative;
-            span {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              left: 50%;
-              transform: translateX(-50%);
-              bottom: 10px;
-              padding-bottom: 14px;
-              color: #fff;
-            }
-            img {
-              display: block;
-              width: 300px;
-              height: 150px;
-            }
-          }
         }
       }
     }
@@ -949,9 +690,9 @@ export default {
     position: relative;
     background-color: #eae62d;
     color: #231815;
-    font-size: .16rem;
+    font-size: 0.16rem;
     // box-sizing: border-box;
-    height: .65rem;
+    height: 0.65rem;
     display: flex;
     justify-content: center;
     &.isFixed {
@@ -961,24 +702,24 @@ export default {
     }
     .nav_pc {
       width: 13rem;
-      height: .65rem;
+      height: 0.65rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-sizing: border-box;
       .logo {
-        height: .5rem;
+        height: 0.5rem;
         width: 1.3rem;
         cursor: pointer;
       }
       .h_navCenter {
-        height: .65rem;
-        line-height: .65rem;
+        height: 0.65rem;
+        line-height: 0.65rem;
         box-sizing: border-box;
         display: flex;
         font-family: "Regular";
         font-weight: 500;
-        font-size: .16rem;
+        font-size: 0.16rem;
         color: #231815;
         .search {
           width: 100%;
@@ -986,15 +727,15 @@ export default {
           align-items: center;
           justify-content: center;
           .img {
-            width: .4rem;
-            height: .4rem;
+            width: 0.4rem;
+            height: 0.4rem;
             background-image: url("../../assets/search/search.png");
             background-repeat: no-repeat;
             background-position: center;
           }
           .btn {
-            height: .4rem;
-            line-height: .4rem;
+            height: 0.4rem;
+            line-height: 0.4rem;
             width: 1rem;
             color: #eae62d;
             text-align: center;
@@ -1007,7 +748,7 @@ export default {
           }
         }
         span {
-          margin-left: .8rem;
+          margin-left: 0.8rem;
           color: #231815;
           cursor: pointer;
           position: relative;
@@ -1036,9 +777,9 @@ export default {
         margin-left: 1rem;
         img {
           cursor: pointer;
-          margin-left: .2rem;
-          height: .20rem;
-          width: .20rem
+          margin-left: 0.2rem;
+          height: 0.2rem;
+          width: 0.2rem;
         }
       }
     }
@@ -1057,7 +798,7 @@ export default {
     .nav_iphone {
       width: 100%;
       height: 0.8rem;
-      padding: .2rem;
+      padding: 0.2rem;
       box-sizing: border-box;
       display: flex;
       align-items: center;
