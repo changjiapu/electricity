@@ -9,6 +9,7 @@
       </router-link>
       <div class="ell-b">Login</div>
       <div class="ell-we">Welcome to Jmoptical</div>
+      <!-- <div id="google-signin-button">goole</div> -->
       <div class="ell-btn">
         <a href="javascript:void(0)" @click="facebook('facebook')">
           SIGN IN WITH FACEBOOK
@@ -16,7 +17,7 @@
             <use xlink:href="#icon-facebook"></use>
           </svg>
         </a>
-        <a  @click="GooleDL('google')">
+        <a  id="google-signin-button">
           SIGN IN WITH GOOGLE
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-facebook"></use>
@@ -53,14 +54,14 @@ export default {
   },
   created() {},
   mounted() {
-    gapi.load("auth2", function() {
-      // Retrieve the singleton for the GoogleAuth library and set up the client.
-      auth2 = gapi.auth2.init({
-        client_id:
-          "89595362849-g22tqagcmeg6a200tb4smel01lnkg0q0.apps.googleusercontent.com", //客户端ID
-        cookiepolicy: "single_host_origin",
-        scope: "profile" //可以请求除了默认的'profile' and 'email'之外的数据
-      });
+    gapi.load("auth2", function() {}); // 加载auth2凭据
+    gapi.signin2.render("google-signin-button", {
+      onsuccess: this.onSignIn,
+      // scope: 'email',
+      width: 200,
+      height: 40,
+      longtitle: false,
+      theme: "dark"
     });
   },
   methods: {
@@ -153,9 +154,21 @@ export default {
         }
       });
     },
+    onSignIn(user) {
+      const profile = user.getBasicProfile(); // 用户登录信息
+      console.log("ID: " + profile.getId());
+      console.log("Full Name: " + profile.getName());
+      console.log("Given Name: " + profile.getGivenName());
+      console.log("Family Name: " + profile.getFamilyName());
+      console.log("Image URL: " + profile.getImageUrl());
+      console.log("Email: " + profile.getEmail());
+
+      var id_token = user.getAuthResponse().id_token;
+      console.log("ID Token: " + id_token);
+    },
     GooleDL() {
-      console.log(111)
-      console.log(auth2.currentUser.get().getBasicProfile())
+      console.log(111);
+      console.log(auth2.currentUser.get().getBasicProfile());
       if (auth2.isSignedIn.get()) {
         var profile = auth2.currentUser.get().getBasicProfile();
         console.log("ID: " + profile.getId());
@@ -166,6 +179,7 @@ export default {
         console.log("Email: " + profile.getEmail());
       }
     },
+
     google() {},
     ...mapMutations({
       setToken: "SET_TOKEN",

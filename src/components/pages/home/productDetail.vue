@@ -361,7 +361,7 @@
           </div>
         </div>
       </section>
-      <section class="section_2">
+      <section class="section_2" id="side_img2">
         <div v-for="(item,index) in 3" :key="index">
           <span>WOMEN'SUNGLASSES</span>
           <span>OPTICAL has hundreds of men's eyeglasses ranging from minimJIM OPTICAL has hundreds of men's eyeglasses ranging from minimJIM OPTICAL has hundreds of men's eyeglasses ranging from minimOPTICAL has hundreds of men's eyeglasses ranging from minimJIM OPTICAL has hundreds of men's eyeglasses ranging from minimJIM OPTICAL has hundreds of men's eyeglasses ranging from minim</span>
@@ -894,10 +894,16 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       var offsetTop = document.querySelector("#side_img").offsetTop;
-      if (scrollTop > offsetTop) {
-        this.sideFixed = true;
-      } else {
-        this.sideFixed = false;
+      // console.log(scrollTop,offsetTop)
+      // if (scrollTop > offsetTop) {
+      //   this.sideFixed = true;
+      // } else {
+      //   this.sideFixed = false;
+      // }
+      if(scrollTop<2300){
+            this.sideFixed = true;
+      }else{
+               this.sideFixed = false;
       }
       if (scrollTop > this.h) {
         this.h += 400;
@@ -1827,7 +1833,7 @@ export default {
         }
         &.isFixed {
           position: fixed;
-          top: 1.1rem;
+          top: 1.8rem;
         }
       }
       .middle {

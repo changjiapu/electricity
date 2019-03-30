@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div v-if="currrntTab==3" class="dropdown4">
+      <div v-if="currrntTab==3&&dropdown2" class="dropdown4" @mouseleave="menuHidde2">
         <div class="menu">
           <div class="activity">
             <img src="../../assets/product-detail/tupian3.png" alt>
@@ -147,7 +147,8 @@ export default {
       clickShop: 0, //表示当前点击的是第几个li 初始为 -1 或 null 不能为0 0表示第一个li
       clickBorder: 0, //表示当前点击的是第几个li 初始为 -1 或 null 不能为0 0表示第一个li
       index_10: false,
-      isShowZd: ""
+      isShowZd: "",
+      dropdown2: true
     };
   },
   created() {
@@ -249,9 +250,15 @@ export default {
       } else {
         this.dropdown = false;
       }
+      if(index==3){
+        this.dropdown2=true
+      }
     },
     menuHidde() {
       this.dropdown = false;
+    },
+    menuHidde2() {
+      this.dropdown2 = false;
     },
     //手机页面抽屉显示隐藏
     showIndex() {
@@ -371,7 +378,7 @@ export default {
     box-sizing: border-box;
     position: absolute;
     left: 15%;
-    top: 0.65rem;
+    top: 0.55rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
@@ -403,13 +410,13 @@ export default {
           display: none;
         }
         span:hover {
-          background-color: #999999;
+          // background-color: #999999;
         }
       }
       .img_list {
         box-sizing: border-box;
         background-color: #eeeeee;
-        width: 400px;
+        width: 3rem;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -452,7 +459,7 @@ export default {
     box-sizing: border-box;
     position: absolute;
     left: 30%;
-    top: 0.65rem;
+        top: 0.55rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
@@ -484,13 +491,13 @@ export default {
           display: none;
         }
         span:hover {
-          background-color: #999999;
+          // background-color: #999999;
         }
       }
       .img_list {
         box-sizing: border-box;
         background-color: #eeeeee;
-        width: 400px;
+           width: 3rem;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -532,8 +539,8 @@ export default {
     padding: 0 10px;
     box-sizing: border-box;
     position: absolute;
-    left: 45%;
-    top: 0.65rem;
+    left: 40%;
+        top: 0.55rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
@@ -565,13 +572,13 @@ export default {
           display: none;
         }
         span:hover {
-          background-color: #999999;
+          // background-color: #999999;
         }
       }
       .img_list {
         box-sizing: border-box;
         background-color: #eeeeee;
-        width: 400px;
+         width: 3rem;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -614,7 +621,7 @@ export default {
     box-sizing: border-box;
     position: absolute;
     left: 50%;
-    top: 0.65rem;
+    top: 0.55rem;
     z-index: 99999;
     overflow: hidden;
     animation: slowDown1 0.7s;
@@ -646,13 +653,13 @@ export default {
           display: none;
         }
         span:hover {
-          background-color: #999999;
+          // background-color: #999999;
         }
       }
       .img_list {
         box-sizing: border-box;
         background-color: #eeeeee;
-        width: 400px;
+        width: 4rem;
         height: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -692,7 +699,7 @@ export default {
     color: #231815;
     font-size: 0.16rem;
     // box-sizing: border-box;
-    height: 0.65rem;
+    height: 0.55rem;
     display: flex;
     justify-content: center;
     &.isFixed {
@@ -702,19 +709,19 @@ export default {
     }
     .nav_pc {
       width: 13rem;
-      height: 0.65rem;
+      height: 0.55rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-sizing: border-box;
       .logo {
-        height: 0.5rem;
+        height: 0.4rem;
         width: 1.3rem;
         cursor: pointer;
       }
       .h_navCenter {
-        height: 0.65rem;
-        line-height: 0.65rem;
+        height: 0.55rem;
+        line-height: 0.55rem;
         box-sizing: border-box;
         display: flex;
         font-family: "Regular";
@@ -727,8 +734,8 @@ export default {
           align-items: center;
           justify-content: center;
           .img {
-            width: 0.4rem;
-            height: 0.4rem;
+            width: 0.35rem;
+            height: 0.35rem;
             background-image: url("../../assets/search/search.png");
             background-repeat: no-repeat;
             background-position: center;
@@ -792,12 +799,12 @@ export default {
     background-color: #eae62d;
     color: #231815;
     font-size: 16px;
-    height: 0.8rem;
+    height: 0.5rem;
     display: flex;
     justify-content: center;
     .nav_iphone {
       width: 100%;
-      height: 0.8rem;
+      height: 0.5rem;
       padding: 0.2rem;
       box-sizing: border-box;
       display: flex;
@@ -806,19 +813,19 @@ export default {
       box-sizing: border-box;
       .logo {
         margin-left: 0.2rem;
-        height: 0.5rem;
-        width: 1.3rem;
+        height: 0.35rem;
+        width: 1.1rem;
         cursor: pointer;
       }
       .gengduo {
         margin-left: 0.2rem;
-        height: 0.25rem;
-        width: 0.35rem;
+        height: 0.2rem;
+        width: 0.3rem;
       }
       .input {
         margin-left: 0.2rem;
         width: 2.6rem;
-        height: 0.5rem;
+        height: 0.35rem;
         display: flex;
         align-items: center;
         padding: 0 0.2rem;
@@ -837,8 +844,8 @@ export default {
         img {
           cursor: pointer;
           margin-left: 0.2rem;
-          height: 0.25rem;
-          width: 0.25rem;
+          height: 0.2rem;
+          width: 0.2rem;
         }
       }
     }
@@ -897,6 +904,7 @@ export default {
     width: 70%;
   }
 }
+
 /*导航部分结束*/
 </style>
 
