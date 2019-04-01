@@ -17,7 +17,7 @@
             <use xlink:href="#icon-facebook"></use>
           </svg>
         </a>
-        <a  id="google-signin-button">
+        <a id="google-signin-button">
           SIGN IN WITH GOOGLE
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-facebook"></use>
@@ -46,23 +46,41 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
+      widthH:'',
       password: "",
       email: "",
       show: false,
       errTxt: "Login and password are required."
     };
   },
-  created() {},
+  created() {
+      this.widthH=this.$root.widthH
+  },
   mounted() {
+    if(this.widthH>1024){
     gapi.load("auth2", function() {}); // 加载auth2凭据
     gapi.signin2.render("google-signin-button", {
       onsuccess: this.onSignIn,
-      // scope: 'email',
-      width: 200,
-      height: 40,
-      longtitle: false,
+      scope: "profile email",
+      width: 400,
+      height: 50,
+      longtitle: true,
       theme: "dark"
+      // onfailure: onFailure
     });
+    }else{
+          gapi.load("auth2", function() {}); // 加载auth2凭据
+    gapi.signin2.render("google-signin-button", {
+      onsuccess: this.onSignIn,
+      scope: "profile email",
+      width: 200,
+      height: 50,
+      longtitle: true,
+      theme: "dark"
+      // onfailure: onFailure
+    });
+    }
+
   },
   methods: {
     signIn() {
@@ -166,25 +184,21 @@ export default {
       var id_token = user.getAuthResponse().id_token;
       console.log("ID Token: " + id_token);
     },
-    GooleDL() {
-      console.log(111);
-      console.log(auth2.currentUser.get().getBasicProfile());
-      if (auth2.isSignedIn.get()) {
-        var profile = auth2.currentUser.get().getBasicProfile();
-        console.log("ID: " + profile.getId());
-        console.log("Full Name: " + profile.getName());
-        console.log("Given Name: " + profile.getGivenName());
-        console.log("Family Name: " + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-      }
-    },
-
     google() {},
     ...mapMutations({
       setToken: "SET_TOKEN",
       setUserId: "SET_USERID"
     })
+  },
+  computed: {
+    screenWidth() {
+      return this.$root.widthH;
+    }
+  },
+  watch: {
+    screenWidth(val) {
+      this.widthH = val;
+    }
   }
 };
 </script>
@@ -211,7 +225,7 @@ export default {
   justify-content: space-between;
 }
 
-.ell-btn a {
+.ell-btn a:first-of-type {
   width: 48%;
   border: none;
   outline: none;
@@ -225,8 +239,24 @@ export default {
   padding: 0;
   margin: 0;
   font-size: 12px;
+  overflow: hidden;
 }
-
+.ell-btn a:last-of-type {
+  width: 48%;
+  border: none;
+  outline: none;
+  background: transparent;
+  /* border: 1px solid #e8e316; */
+  height: 45px;
+  line-height: 45px;
+  color: #ffffff;
+  border-radius: 5px;
+  font-family: Bold;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  overflow: hidden;
+}
 .ell-img {
   text-align: center;
   padding-top: 10vh;
