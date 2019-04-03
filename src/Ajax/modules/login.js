@@ -39,3 +39,19 @@ export function facebookLogin(data){
        data:data
    })
 }
+//订阅
+export function subscribeToNews(data){
+    return request({
+       url:'/user/subscribeToNews',
+       method:'post',
+       data:data
+   })
+}
+//谷歌登录
+export function GoogleLogin(data){
+    return request({
+       url:'/user/GoogleLogin',
+       method:'post',
+       data:data
+   })
+}

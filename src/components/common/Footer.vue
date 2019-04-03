@@ -17,10 +17,10 @@
         <dt>Subscribe to News letter</dt>
         <dd>Please enter a valid email address.</dd>
         <dd>
-          <input type="text" class="h_footerSearchBox">
+          <input type="text" class="h_footerSearchBox" v-model="input1">
         </dd>
         <dd>
-          <input type="button" value="SIGN UP" class="h_footerBtnBox">
+          <input type="button" value="SIGN UP" class="h_footerBtnBox" @click="dingyue()">
         </dd>
       </dl>
       <dl>
@@ -40,15 +40,15 @@
         <dt>Subscribe to News letter</dt>
         <dd>Please enter a valid email address.</dd>
         <dd class="h_footerBox">
-          <input type="text" class="h_footerSearchBox">
-          <input type="button" value="SIGN UP" class="h_footerBtnBox">
+          <input type="text" class="h_footerSearchBox" v-model="input1">
+          <input type="button" value="SIGN UP" class="h_footerBtnBox" @click="dingyue()">
         </dd>
       </dl>
     </div>
     <div :class="currentClass2">
       <div class="h_footerRightCenter">
         <img src="../../assets/prublic/logo-huangse.png" alt>
-        <span>© 2018 JMOPTICAL Eyewear.</span>
+        <span>© 2018 JMOPTICAL Eyewear. {{$t('m.music')}}</span>
       </div>
     </div>
   </div>
@@ -56,16 +56,38 @@
 
 <script>
 import AJAX from "../../Ajax";
+import { subscribeToNews } from "../../Ajax/modules/login";
 export default {
   data() {
     return {
-      widthH: ""
+      widthH: "",
+      input1: ""
     };
   },
   created() {
     this.widthH = this.$root.widthH;
   },
-  methods: {},
+  methods: {
+    dingyue() {
+      let reg = /^\w+@\w+(\.[a-zA-Z]{2,3}){1,2}$/;
+      if (reg.test(this.input1) == false) {
+        this.$alert("Email is not a valid email address", {
+          confirmButtonText: "confirm"
+        });
+      }
+      let params = {
+        subEmail: this.input1
+      };
+      subscribeToNews(params).then(res => {
+        if (res.data.code == 0) {
+          this.$message({
+            message: "Subscribe to the success",
+            type: "success"
+          });
+        }
+      });
+    }
+  },
   computed: {
     currentClass() {
       if (this.widthH > 1024) {

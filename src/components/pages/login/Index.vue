@@ -40,13 +40,13 @@
 </template>
 <script>
 // import hello from 'hellojs/dist/hello.all'
-import { login, facebookLogin } from "../../../Ajax/modules/login";
+import { login, facebookLogin, GoogleLogin } from "../../../Ajax/modules/login";
 import { hex_md5 } from "../../../utils/md5";
 import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      widthH:'',
+      widthH: "",
       password: "",
       email: "",
       show: false,
@@ -54,33 +54,32 @@ export default {
     };
   },
   created() {
-      this.widthH=this.$root.widthH
+    this.widthH = this.$root.widthH;
   },
   mounted() {
-    if(this.widthH>1024){
-    gapi.load("auth2", function() {}); // 加载auth2凭据
-    gapi.signin2.render("google-signin-button", {
-      onsuccess: this.onSignIn,
-      scope: "profile email",
-      width: 400,
-      height: 50,
-      longtitle: true,
-      theme: "dark"
-      // onfailure: onFailure
-    });
-    }else{
-          gapi.load("auth2", function() {}); // 加载auth2凭据
-    gapi.signin2.render("google-signin-button", {
-      onsuccess: this.onSignIn,
-      scope: "profile email",
-      width: 200,
-      height: 50,
-      longtitle: true,
-      theme: "dark"
-      // onfailure: onFailure
-    });
+    if (this.widthH > 1024) {
+      gapi.load("auth2", function() {}); // 加载auth2凭据
+      gapi.signin2.render("google-signin-button", {
+        onsuccess: this.onSignIn,
+        scope: "profile email",
+        width: 400,
+        height: 50,
+        longtitle: true,
+        theme: "dark"
+        // onfailure: onFailure
+      });
+    } else {
+      gapi.load("auth2", function() {}); // 加载auth2凭据
+      gapi.signin2.render("google-signin-button", {
+        onsuccess: this.onSignIn,
+        scope: "profile email",
+        width: 200,
+        height: 50,
+        longtitle: true,
+        theme: "dark"
+        // onfailure: onFailure
+      });
     }
-
   },
   methods: {
     signIn() {
@@ -137,8 +136,7 @@ export default {
                 _this.$router.push("./");
               } else {
                 _this.show = true;
-                _this.errTxt =
-                  "Invalid username or password <br> (check your CAPS LOCK key)";
+                _this.errTxt = "Logon failed";
               }
             });
           });
@@ -163,8 +161,7 @@ export default {
                   _this.$router.push("./");
                 } else {
                   _this.show = true;
-                  _this.errTxt =
-                    "Invalid username or password <br> (check your CAPS LOCK key)";
+                  _this.errTxt = "Logon failed";
                 }
               });
             });
@@ -174,15 +171,25 @@ export default {
     },
     onSignIn(user) {
       const profile = user.getBasicProfile(); // 用户登录信息
-      console.log("ID: " + profile.getId());
-      console.log("Full Name: " + profile.getName());
-      console.log("Given Name: " + profile.getGivenName());
-      console.log("Family Name: " + profile.getFamilyName());
-      console.log("Image URL: " + profile.getImageUrl());
-      console.log("Email: " + profile.getEmail());
-
-      var id_token = user.getAuthResponse().id_token;
-      console.log("ID Token: " + id_token);
+      let params = {
+        lastName: profile.getFamilyName(),
+        firstName: profile.getGivenName(),
+        googleUserId: profile.getId(),
+        userEmail: profile.getEmail()
+      };
+      let _this = this;
+      GoogleLogin(params).then(res => {
+        if (res.data.code == 0) {
+          sessionStorage.setItem("token", res.data.data.token);
+          sessionStorage.setItem("userId", res.data.data.userId);
+          _this.setToken(res.data.data.token);
+          _this.setUserId(res.data.data.userId);
+          _this.$router.push("./");
+        } else {
+          _this.show = true;
+          _this.errTxt = "Logon failed";
+        }
+      });
     },
     google() {},
     ...mapMutations({

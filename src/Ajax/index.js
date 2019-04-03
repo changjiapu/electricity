@@ -19,7 +19,7 @@ function endLoading() { //使用Element loading-close 方法 关闭动画
   loading.close()
 }
 //生产环境判断 线下测试域名 线上服务器域名
-const BASEAPI = process.env.NODE_ENV === 'development' ? 'http://114.115.211.170:8080/web/' : 'https://www.jimhalo.com/web/'
+const BASEAPI = process.env.NODE_ENV === 'development' ? 'https://www.jimhalo.com/web/' : 'https://www.jimhalo.com/web/'
 // 创建axios实例
 const request = axios.create({
   baseURL: BASEAPI, //请求接口域名

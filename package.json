@@ -22,10 +22,11 @@
     "lib-flexible": "^0.3.2",
     "node-sass": "^4.11.0",
     "popper.js": "^1.14.4",
-    "swiper": "^4.5.0",
     "vue": "^2.5.2",
+    "vue-i18n": "^8.10.0",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "swiper": "^4.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

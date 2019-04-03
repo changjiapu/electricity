@@ -7,13 +7,26 @@ import store from './store'
 import $ from 'jquery'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueI18n from 'vue-i18n'
 Vue.use(ElementUI);
-
+Vue.use(VueI18n)
 Vue.config.productionTip = false
 Vue.prototype.bus = new Vue()
-/* eslint-disable no-new */
+ 
+const i18n = new VueI18n({
+  // 从本地存储中取，如果没有默认为中文，
+  // 这样可以解决切换语言后，没记住选择的语言，刷新页面后还是默认的语言
+  locale:'en',
+  
+  messages: {
+    'zh':  require('./vuei18n/zh'), // 中文语言包
+    'en': require('./vuei18n/en') // 英文语言包
+  }
+})
+
 new Vue({ 
   el: '#app',
+  i18n,
   store,
   router,
   components: { App },
