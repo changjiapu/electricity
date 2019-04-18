@@ -3,44 +3,44 @@
     <div class="content" v-if="widthH>=768">
       <div class="left">
         <div class="title">
-          <span>MY CART</span>
-          <span>{{cartList.length}} item in cart</span>
-          <span class="clear" @click="clearCart">Empty cart</span>
+          <span>{{$t('m.cart.title1')}}</span>
+          <span>{{cartList.length}} {{$t('m.cart.title2')}}</span>
+          <span class="clear" @click="clearCart">{{$t('m.cart.title3')}}</span>
         </div>
         <div class="main" v-if="cartList.length==0">
           <div class="bg_img"></div>
-          <span class="text_1">Shopping Cart is Empty</span>
-          <span class="text_2">You have no items in your shopping cart</span>
+          <span class="text_1">{{$t('m.cart.title4')}}</span>
+          <span class="text_2">{{$t('m.cart.title5')}}</span>
           <div class="btn">
-            <router-link to="/search">TO SHOPING</router-link>
-            <router-link to="/index/home">BACK HOME</router-link>
+            <router-link to="/search/1/0">{{$t('m.cart.title6')}}</router-link>
+            <router-link to="/">{{$t('m.cart.title7')}}</router-link>
           </div>
         </div>
         <div class="main2" v-else>
           <div class="cart_item" v-for="(item,index) in cartList" :key="index">
             <div class="left2">
               <img :src="imgUrl+item.product.productImage" alt>
-              <span>{{item.productSpec.stock?'In stock':'Out of stock'}}</span>
+              <span>{{item.productSpec.stock?$t('m.cart.title8'):$t('m.cart.title9')}}</span>
               <!-- <span>12-Month Product Guarantee</span>
               <span>14-Day Risk Free Returns</span>-->
             </div>
             <div class="right2">
               <div class="top">
                 <div class="top_1">
-                  <span>Frame:</span>
+                  <span>{{$t('m.cart.10')}}</span>
                   <span>{{item.product.productName}}</span>
                   <span>${{item.productSpec.preferentialPrice?item.productSpec.preferentialPrice:item.productSpec.price}}</span>
                 </div>
                 <div class="top_2">
-                  <span>Color:</span>
+                  <span>{{$t('m.cart.title11')}}</span>
                   <span>{{item.productSpec.productSpecs.Color.split("|")[1]}}</span>
                 </div>
                 <div class="top_2">
-                  <span>Size:</span>
+                  <span>{{$t('m.cart.title12')}}</span>
                   <span>{{item.productSpec.productSpecs.Size}}</span>
                 </div>
                 <div class="top_3">
-                  <span>Qty:</span>
+                  <span>{{$t('m.cart.title3')}}</span>
                   <span>{{item.productNum}}</span>
                   <el-input-number
                     class="input"
@@ -52,17 +52,17 @@
                   ></el-input-number>
                 </div>
                 <div class="top_2">
-                  <span>Accessories:</span>
+                  <span>{{$t('m.cart.title14')}}</span>
                   <span>1/1</span>
                 </div>
                 <div class="top_4">
-                  <span>Subtotal</span>
+                  <span>{{$t('m.cart.title15')}}</span>
                   <span>${{item.productSpec.preferentialPrice?item.productSpec.preferentialPrice*item.productNum:item.productSpec.price*item.productNum}}</span>
                 </div>
               </div>
               <div class="bottom">
                 <!-- <span>EDIT LENSES</span> -->
-                <span @click="Detail(item.cartId)">DELETE</span>
+                <span @click="Detail(item.cartId)">{{$t('m.cart.title16')}}</span>
               </div>
             </div>
           </div>
@@ -70,40 +70,42 @@
       </div>
       <div class="right">
         <div class="title">
-          <span>Items:{{cartList.length}}</span>
-          <span>Subtotal: ${{totalPrice}}</span>
+          <span>{{$t('m.cart.title17')}}{{cartList.length}}</span>
+          <span>{{$t('m.cart.title18')}} ${{totalPrice}}</span>
         </div>
-        <span class="totalPrices">Order Total: ${{totalPrice}}</span>
-        <span class="suoming">Shipping and Tax not included</span>
-        <span class="btn" v-if="cartList.length==0">PROCEED TO CHECKOUT</span>
-        <span class="btn2" v-else @click="gotoBuy()">PROCEED TO CHECKOUT</span>
+        <span class="totalPrices">{{$t('m.cart.title19')}} ${{totalPrice}}</span>
+        <span class="suoming">{{$t('m.cart.title20')}}</span>
+        <span class="btn" v-if="cartList.length==0">{{$t('m.cart.title21')}}</span>
+        <span class="btn2" v-else @click="gotoBuy()">{{$t('m.cart.title21')}}</span>
         <span class="shuoming3">
-          <router-link to="/search">CONTINUE SHOPPING</router-link>
+          <router-link to="/search">{{$t('m.cart.title22')}}</router-link>
         </span>
-        <span class="shuoming2">You can choose the following payment methods:</span>
+        <span class="shuoming2">{{$t('m.cart.title23')}}</span>
         <div class="xuanze"></div>
-        <div class="help">Need Help? Start a Live Chat!</div>
+        <div class="help">{{$t('m.cart.title24')}}</div>
       </div>
     </div>
     <div class="content2" v-else>
       <div class="router">
-        <span class="one"><router-link to="/index/home">HOME</router-link></span>
+        <span class="one">
+          <router-link to="/index/home">{{$t('m.cart.iphone1')}}</router-link>
+        </span>
         <img src="../../../assets/cart/SHOPCAR_030.png" alt>
-        <span>My cart</span>
+        <span>{{$t('m.cart.iphone2')}}</span>
       </div>
-      <div class="main"  v-if="cartList.length==0">
+      <div class="main" v-if="cartList.length==0">
         <div class="bg_img"></div>
-        <span class="text_1">Shopping Cart is Empty</span>
-        <span class="text_2">You have no items in your shopping cart</span>
+        <span class="text_1">{{$t('m.cart.iphone3')}}</span>
+        <span class="text_2">{{$t('m.cart.iphone4')}}</span>
         <div class="btn">
-          <router-link to="/search">TO SHOPING</router-link>
-          <router-link to="/index/home">BACK HOME</router-link>
+          <router-link to="/search/1/0">{{$t('m.cart.iphone5')}}</router-link>
+          <router-link to="/">{{$t('m.cart.iphone6')}}</router-link>
         </div>
       </div>
       <div class="middleContent" v-else>
         <div class="content_top_name">
-          <div class="title">MY CART</div>
-          <div class="second_title">({{cartList.length}} item in cart)</div>
+          <div class="title">{{$t('m.cart.iphone7')}}</div>
+          <div class="second_title">({{cartList.length}} {{$t('m.cart.iphone8')}})</div>
         </div>
         <!-- 中间商品内容部分 -->
         <div class="contentInfoBox" v-for="(item,index) in cartList" :key="index">
@@ -112,7 +114,7 @@
             <div class="imgRight">
               <div class="item">
                 <div class="left">
-                  <span class="title">frame:</span>
+                  <span class="title">{{$t('m.cart.iphone9')}}</span>
                   <span class="trueTitle">{{item.product.productName}}</span>
                 </div>
                 <div
@@ -121,16 +123,16 @@
               </div>
               <div class="item">
                 <div class="left">
-                  <span class="title">color:</span>
+                  <span class="title">{{$t('m.cart.iphone10')}}</span>
                   <span class="trueTitle">{{item.productSpec.productSpecs.Color.split("|")[1]}}</span>
                 </div>
               </div>
               <div class="item">
                 <div class="left">
-                  <span class="title">size:</span>
+                  <span class="title">{{$t('m.cart.iphone11')}}</span>
                   <span class="trueTitle">{{item.productSpec.productSpecs.Size}}</span>
                 </div>
-                <div class="frameNum">Qdy:{{item.productNum}}</div>
+                <div class="frameNum">{{$t('m.cart.iphone12')}}{{item.productNum}}</div>
               </div>
               <el-input-number
                 class="input"
@@ -142,7 +144,7 @@
               ></el-input-number>
               <div class="item">
                 <div class="left">
-                  <span class="title">Subtotal:</span>
+                  <span class="title">{{$t('m.cart.iphone13')}}</span>
                 </div>
                 <div
                   class="frameNum"
@@ -151,10 +153,10 @@
             </div>
           </div>
           <div class="btn">
-            <span class="Editlenses" @click="clearCart">Empty cart</span>
+            <span class="Editlenses" @click="clearCart">{{$t('m.cart.iphone14')}}</span>
             <span class="Delete" @click="Detail(item.cartId)">
               <img src="../../../assets/cart//SHOPCAR_11.png" alt>
-              Delete
+              {{$t('m.cart.iphone15')}}
             </span>
           </div>
         </div>
@@ -162,19 +164,19 @@
         <div class="bottomBox">
           <div class="content">
             <div class="word">
-              <div class="title">Items:{{cartList.length}}</div>
-              <div>Subtotal: ${{totalPrice}}</div>
+              <div class="title">{{$t('m.cart.iphone16')}}{{cartList.length}}</div>
+              <div>{{$t('m.cart.iphone17')}} ${{totalPrice}}</div>
             </div>
             <div class="word">
-              <div class="title">Order Total: ${{totalPrice}}</div>
-              <div class style="color:#a0a0a0;">Shipping and Tax not included</div>
+              <div class="title">{{$t('m.cart.iphone18')}} ${{totalPrice}}</div>
+              <div class style="color:#a0a0a0;">{{$t('m.cart.iphone19')}}</div>
               <div class="bottom_btn">
-                <div class="btn deep" @click="gotoBuy()">Proceed to checkout</div>
+                <div class="btn deep" @click="gotoBuy()">{{$t('m.cart.iphone20')}}</div>
                 <div class="btn">
-                  <router-link to="/search">CONTINUE SHOPPING</router-link>
+                  <router-link to="/search">{{$t('m.cart.iphone21')}}</router-link>
                 </div>
               </div>
-              <div class="line_word">You can choose the following payment methods:</div>
+              <div class="line_word">{{$t('m.cart.iphone22')}}</div>
               <div class="iconBox">
                 <img src="../../../assets/cart//SHOPCAR_14.png" alt>
                 <img src="../../../assets/cart//SHOPCAR_16.png" alt>
@@ -185,7 +187,7 @@
               </div>
               <div class="bottom_line_word">
                 <img src="../../../assets/cart//SHOPCAR_32.png" alt>
-                Need Help? Start a Live Chat!
+                {{$t('m.cart.iphone23')}}
               </div>
             </div>
           </div>
@@ -224,7 +226,7 @@ export default {
         if (res.data.code == 0) {
           this.getShopCartList(this.userId, 1, 10);
           this.$notify({
-            message: "Delete the success!",
+            message: this.$t("m.cart.tips1"),
             type: "success",
             offset: 100
           });
@@ -240,7 +242,7 @@ export default {
           specId: item.specId,
           productName: item.product.productName,
           quantity: item.productNum,
-          prescriptionId:item.prescriptionId,
+          prescriptionId: item.prescriptionId,
           stock: item.productSpec.stock,
           productPrice: item.productSpec.preferentialPrice
             ? item.productSpec.preferentialPrice
@@ -249,12 +251,12 @@ export default {
         paramsList.push(params);
       }
       console.log(paramsList);
-      localStorage.removeItem('params'),
-      localStorage.setItem("paramsList",JSON.stringify(paramsList))
+      localStorage.removeItem("params"),
+        localStorage.setItem("paramsList", JSON.stringify(paramsList));
       this.$router.push({
         name: "/transportation",
         params: {
-          paramsList:JSON.stringify(paramsList)
+          paramsList: JSON.stringify(paramsList)
         }
       });
     },
@@ -303,7 +305,7 @@ export default {
     },
     //清空购物车
     clearCart() {
-      this.$confirm("Are you sure it's empty??", "Tips", {
+      this.$confirm(this.$t("m.cart.tips2"), "Tips", {
         confirmButtonText: "Determine",
         cancelButtonText: "cancel",
         type: "warning"
@@ -313,7 +315,7 @@ export default {
             if (res.data.code == 0) {
               this.$message({
                 type: "success",
-                message: "Clear success!"
+                message: this.$t("m.cart.tips3")
               });
               this.getShopCartList(this.userId, 1, 10);
             }

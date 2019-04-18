@@ -134,7 +134,7 @@ export default {
         height: 40px;
         line-height: 40px;
         width: 160px;
-        background-color: #eae62d;
+        background-color: #f6be00;
         text-align: center;
         color: #231815;
         font-size: 15px;
@@ -241,7 +241,7 @@ export default {
         height: 0.6rem;
         line-height: 0.6rem;
         width: 2rem;
-        background-color: #eae62d;
+        background-color: #f6be00;
         text-align: center;
         color: #231815;
         font-size: 0.16rem;

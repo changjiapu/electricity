@@ -42,3 +42,17 @@ export function getProductCategory(){
 		method:'get'
 	})
 }
+//获取seo优化信息
+export function getSeoInformation(){
+	return request({
+		url:'/user/getSeoInformation',
+		method:'get'
+	})
+}
+//查询网站底部链接信息
+export function getLinkLabelList(){
+	return request({
+		url:'/user/getLinkLabelList',
+		method:'get'
+	})
+}

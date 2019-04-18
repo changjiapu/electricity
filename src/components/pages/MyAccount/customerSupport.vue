@@ -1,40 +1,40 @@
 <template>
   <div :class="currentClass">
-    <div class="banner">Customer Support</div>
+    <div class="banner">{{$t('m.customerSupport.title1')}}</div>
     <History :history="history"></History>
     <div class="main">
       <div class="left">
-        <p class="title">SEND US A MESSAGE</p>
-        <span class="title_1">- Topic</span>
+        <p class="title">{{$t('m.customerSupport.title2')}}</p>
+        <span class="title_1">- {{$t('m.customerSupport.title3')}}</span>
         <el-input v-model="params.mTopic"></el-input>
-        <span class="title_1">- E-mail address</span>
+        <span class="title_1">- {{$t('m.customerSupport.title4')}}</span>
         <el-input v-model="params.mEmail"></el-input>
-        <span class="title_1">- Your message</span>
+        <span class="title_1">- {{$t('m.customerSupport.title5')}}</span>
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="params.mContent"></el-input>
-        <span class="title_right">Maximum 1000 characters (1000 remaining)</span>
+        <span class="title_right">{{$t('m.customerSupport.title6')}}</span>
         <div class="name">
           <div>
-            <span>- First name</span>
+            <span>- {{$t('m.customerSupport.title7')}}</span>
             <el-input v-model="params.firstName"></el-input>
           </div>
           <div>
-            <span>- Last name</span>
+            <span>- {{$t('m.customerSupport.title8')}}</span>
             <el-input v-model="params.lastName"></el-input>
           </div>
         </div>
-        <span class="title_1">- Order number</span>
+        <span class="title_1">- {{$t('m.customerSupport.title9')}}</span>
         <el-input v-model="params.orderNumber"></el-input>
         <p
           class="title_2"
-        >By clicking Submit, you declare that you have read and understood the pricacy policy provide by JMOPTICAL Gro jp S.p.a.for the processing of your Personal Data</p>
-        <span class="btn" @click="Submit()">Submit</span>
+        >{{$t('m.customerSupport.title10')}}</p>
+        <span class="btn" @click="Submit()">{{$t('m.customerSupport.title11')}}</span>
       </div>
       <div class="right">
-        <span class="title">CUSTOMER CARE HOURS</span>
+        <span class="title">{{$t('m.customerSupport.title12')}}</span>
         <span v-for='(item,index) in message2' :key='index'>{{item}}</span>
-        <span class="title">CALL JIMOPTICAL.COM</span>
+        <span class="title">{{$t('m.customerSupport.title13')}}</span>
         <span>{{message[0].serviceText}}</span>
-        <span class="title">Warranty & Spare Parts Information:</span>
+        <span class="title">{{$t('m.customerSupport.title14')}}</span>
         <span>{{message[2].serviceText}}</span>
       </div>
     </div>
@@ -53,8 +53,8 @@ export default {
   data() {
     return {
       history: [
-        { name: "My Account", url: "/myAccount" },
-        { name: "Customer Support", url: "" }
+        { name: this.$t('m.customerSupport.history1'), url: "/myAccount" },
+        { name: this.$t('m.customerSupport.history2'), url: "" }
       ], //传递给历史导航组件的参数
       widthH: "",
       message: [],
@@ -84,25 +84,25 @@ export default {
     },
     Submit() {
       if (this.params.mTopic == "") {
-        this.$alert("Please enter the taopic", "Tips", {
+        this.$alert(this.$t('m.customerSupport.tips1'), "Tips", {
           confirmButtonText: "confirm"
         });
         return;
       }
       if (this.params.mEmail == "") {
-        this.$alert("Please enter email address", "Tips", {
+        this.$alert(this.$t('m.customerSupport.tips2'), "Tips", {
           confirmButtonText: "confirm"
         });
         return;
       }
       if (this.params.mContent == "") {
-        this.$alert("The content cannot be empty", "Tips", {
+        this.$alert(this.$t('m.customerSupport.tips3'), "Tips", {
           confirmButtonText: "confirm"
         });
         return;
       }
       if (this.params.firstName == "" || this.params.firstName == "") {
-        this.$alert("The name cannot be empty", "Tips", {
+        this.$alert(this.$t('m.customerSupport.tips4'), "Tips", {
           confirmButtonText: "confirm"
         });
         return;
@@ -119,7 +119,7 @@ export default {
       customerFeedback(params).then(res => {
         if (res.data.code == 0) {
           this.$message({
-            message: "Feedback success",
+            message: this.$t('m.customerSupport.tips5'),
             type: "success"
           });
         } else {
@@ -209,6 +209,7 @@ export default {
         text-align: center;
         line-height: 40px;
         border-radius: 10px;
+        cursor:pointer;
       }
     }
     .right {

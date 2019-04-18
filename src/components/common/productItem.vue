@@ -24,17 +24,20 @@
       </div>
       <div class="price">
         <span>{{shopData.productName}}</span>
-        <span>${{shopData.preferentialPrice?shopData.preferentialPrice:shopData.price}}</span>
+        <span style="color:red">${{shopData.preferentialPrice?shopData.preferentialPrice:shopData.price}}</span>
         <span
           style=" text-decoration:line-through;color:#ccc;"
-          v-if="discount===0||discount>0"
+          v-if="shopData.preferentialPrice"
         >${{shopData.price }}</span>
       </div>
       <div class="btn" v-if="isShowBtn">
-        <span @click.stop="AddCollection(shopData)">ADD TO WISHLIST</span>
-        <span @click.stop="gotoDetail()">SHOP NOW</span>
+        <span @click.stop="AddCollection(shopData)">{{$t('m.productItem.btn_1')}}</span>
+        <span @click.stop="gotoDetail()">{{$t('m.productItem.btn_2')}}</span>
       </div>
+      <div class="sale" v-if="shopData.preferentialPrice">sale</div>
     </div>
+
+
     <div
       class="product_item2"
       v-else
@@ -48,10 +51,10 @@
       <div class="price">
         <span>{{shopData.productName}}</span>
         <div class="priceA">
-          <span>${{shopData.preferentialPrice?shopData.preferentialPrice:shopData.price}}</span>
+          <span style="color:red">${{shopData.preferentialPrice?shopData.preferentialPrice:shopData.price}}</span>
           <span
             style=" text-decoration:line-through;color:#ccc;"
-            v-if="discount===0||discount>0"
+            v-if="shopData.preferentialPrice"
           >${{shopData.price }}</span>
         </div>
       </div>
@@ -72,6 +75,7 @@
           <img src="../../assets/search/cart.png">
         </div>
       </div>
+            <div class="sale" v-if="shopData.preferentialPrice">sale</div>
     </div>
   </div>
 </template>
@@ -94,13 +98,6 @@ export default {
       maskImg: "",
       widthH: ""
     };
-  },
-  watch: {
-    productList(val) {
-      this.proList = val;
-      this.getData();
-      console.log(val);
-    }
   },
   created() {
     this.widthH = this.$root.widthH;
@@ -175,9 +172,9 @@ export default {
           console.log(val);
           if (that.shopData.img != val.productImages[0].imageUrl) {
             that.shopData.img = val.productImages[0].imageUrl;
-          } else if(that.shopData.img != val.productImages[1].imageUrl){
+          } else if (that.shopData.img != val.productImages[1].imageUrl) {
             that.shopData.img = val.productImages[1].imageUrl;
-          }else if(that.shopData.img != val.productImages[2].imageUrl){
+          } else if (that.shopData.img != val.productImages[2].imageUrl) {
             that.shopData.img = val.productImages[2].imageUrl;
           }
         }
@@ -189,7 +186,7 @@ export default {
       } else this.shopData.img = this.imgSrc;
       this.isShowBtn = false;
     },
-    //试穿
+    //收藏
     AddCollection(data) {
       let params = {
         userId: this.userId,
@@ -199,12 +196,12 @@ export default {
       AddCollection(params).then(res => {
         if (res.data.code == 0) {
           this.$message({
-            message: "Collection of success",
+            message: this.$t("m.productItem.tip_title1"),
             type: "success"
           });
         } else if (res.data.code == -20) {
           this.$message({
-            message: "Collection of success",
+            message: this.$t("m.productItem.tip_title2"),
             type: "success"
           });
         }
@@ -221,13 +218,13 @@ export default {
       });
     }
   },
-  computed: { 
-        screenWidth() {
+  computed: {
+    screenWidth() {
       return this.$root.widthH;
     },
     ...mapState(["userId"])
   },
-    watch: {
+  watch: {
     screenWidth(val) {
       this.widthH = val;
     }
@@ -242,11 +239,16 @@ export default {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  position: relative;
   // background-color: #231815;
   img {
-    margin-top: .40rem;
+    margin-top: 0.4rem;
     width: 2rem;
     height: 1rem;
+    transition: all 0.4s;
+  }
+  img:hover {
+    transform: scale(1.1);
   }
   .price {
     font-size: 18px;
@@ -281,7 +283,7 @@ export default {
     margin-top: 23px;
     display: flex;
     span {
-      width: 140px;
+      width: 1.3rem;
       height: 35px;
       text-align: center;
       line-height: 35px;
@@ -299,6 +301,20 @@ export default {
       }
     }
   }
+  .sale{
+    font-size: .12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    height: .30rem;
+    width: .30rem;
+    border-radius: 100%;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    left: .5rem;
+  }
 }
 .product_item2 {
   width: 3.2rem;
@@ -310,6 +326,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+    position: relative;
   .img {
     img {
       width: 1.8rem;
@@ -364,6 +381,20 @@ export default {
         width: 0.3rem;
       }
     }
+  }
+    .sale{
+    font-size: .12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    height: .5rem;
+    width: .5rem;
+    border-radius: 100%;
+    background-color: red;
+    position: absolute;
+    top: .3rem;
+    left: .1rem;
   }
 }
 </style>

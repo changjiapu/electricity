@@ -4,7 +4,7 @@
       <ol class="history">
         <li v-for="(item,index) in history" :key="index">{{item}}</li>
       </ol>
-      <div v-if="widthH >1024">
+      <!-- <div v-if="widthH >1024">
         <span>HOLIDAY CLEARANCE</span>
         <span>SALES PROMOTION</span>
         <span>UP TO 30%~35%</span>
@@ -17,33 +17,36 @@
           <span>UP TO 30%~35%</span>
         </div>
         <img src="../../../assets/deal/guanbi.png" alt>
-      </div>
+      </div>-->
     </section>
     <section class="main">
-      <div class="img_1" v-for="(item,index) in 4" :key="index">
-        <img src="../../../assets/deal/tupian1.png" alt>
-        <div class="time">
-          <div>
-            <span>16</span>
-            <span>HOUR</span>
-          </div>
-          <div>
-            <span>26</span>
-            <span>MINS</span>
-          </div>
-          <div>
-            <span>05</span>
-            <span>SECS</span>
+      <div class="left">
+        <P class="title">Clearance activities</P>
+        <div class="img_1" v-for="(item,index) in list1" :key="index">
+          <img :src="imgUrl+item.adImage" alt>
+          <!-- <div class="time">
+            <div>
+              <span>{{item.hh}}</span>
+              <span>HOUR</span>
+            </div>
+            <div>
+              <span>{{item.mm}}</span>
+              <span>MINS</span>
+            </div>
+            <div>
+              <span>{{item.ss}}</span>
+              <span>SECS</span>
+            </div>
+          </div>-->
+          <div class="explain">
+            <span>{{item.title}}</span>
+            <!-- <span>{{item.djs}}</span> -->
+            <span>{{item.description}}</span>
+            <span @click="getCode(item.discountId)">GO TO Detail</span>
+            <!-- <span>GET GODE</span> -->
           </div>
         </div>
-        <div class="explain">
-          <span>Christmas Sale</span>
-          <span>BUY ONE</span>
-          <span>GET ONE FREE!</span>
-          <span>GET GODE</span>
-        </div>
-      </div>
-      <div class="img_2" v-for="(item,index) in 2" :key="index">
+        <!-- <div class="img_2" v-for="(item,index) in 2" :key="index">
         <div class="time">
           <div>
             <span>16</span>
@@ -81,36 +84,159 @@
         <span class="el_1">70% OFF LENSES</span>
         <span class="el_2">+FREE SHIPPING</span>
         <span class="btn">GET CODE</span>
+        </div>-->
+      </div>
+      <div class="right">
+        <P class="title">Limit activities</P>
+        <div class="img_1" v-for="(item,index) in list2" :key="index">
+          <img :src="imgUrl+item.adImage" alt>
+          <div class="time">
+            <div>
+              <span>{{item.hh}}</span>
+              <span>HOUR</span>
+            </div>
+            <div>
+              <span>{{item.mm}}</span>
+              <span>MINS</span>
+            </div>
+            <div>
+              <span>{{item.ss}}</span>
+              <span>SECS</span>
+            </div>
+          </div>
+          <div class="explain">
+            <span>{{item.title}}</span>
+            <!-- <span>{{item.djs}}</span> -->
+            <span>{{item.description}}</span>
+            <span @click="getCode(item.discountId)">GO TO Detail</span>
+            <!-- <span>GET GODE</span> -->
+          </div>
+        </div>
       </div>
     </section>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import {
+  getTimeLimitedAdvertisingList,
+  getExchangeCode
+} from "../../../Ajax/modules/deal";
 export default {
   name: "deal",
   data() {
     return {
       widthH: "",
-      history: ["Home", "deal"]
+      history: ["Home", "deal"],
+      imgUrl: "",
+      list1: [], //清仓活动
+      list2: [] //限时活动
     };
   },
   created() {
     this.widthH = this.$root.widthH;
+    this.imgUrl = this.$root.imgUrl;
+    this.getTimeLimitedAdvertisingList();
   },
-  methods: {},
+  methods: {
+    //获取活动代码
+    getCode(id) {
+      this.$router.push({
+        name: "/search"
+        // params: {
+        //   data: 0,
+        //   tabId: 0
+        // }
+      });
+      // let params = {
+      //   userId: this.userId,
+      //   disId: id
+      // };
+      // getExchangeCode(params).then(res => {
+      //   if (res.data.code == 0) {
+      //     this.$alert(res.data.data, "Please keep the activity code properly", {
+      //       confirmButtonText: "confirm"
+      //     });
+      //   } else if (res.data.code == -2) {
+      //     this.$alert("It's already been collected", "Tips", {
+      //       confirmButtonText: "confirm"
+      //     });
+      //   }
+      // });
+    },
+    //获取限时活动列表
+    getTimeLimitedAdvertisingList() {
+      var _this = this;
+      getTimeLimitedAdvertisingList().then(res => {
+        if (res.data.code == 0) {
+          res.data.data.TimeLimit.map((obj, index) => {
+            this.$set(obj, "djs", _this.InitTime(obj.timeRemaining));
+            this.$set(obj, "hh", 0);
+            this.$set(obj, "mm", 0);
+            this.$set(obj, "ss", 0);
+          });
+          this.list1 = res.data.data.Clearance;
+          this.list2 = res.data.data.TimeLimit;
+        }
+      });
+    },
+    InitTime(endtime) {
+      var dd,
+        hh,
+        mm,
+        ss = null;
+      var time = parseInt(endtime);
+      if (time <= 0) {
+        return "结束";
+      } else {
+        dd = Math.floor(time / 60 / 60 / 24);
+        hh = Math.floor((time / 60 / 60) % 24);
+        mm = Math.floor((time / 60) % 60);
+        ss = Math.floor(time % 60);
+        var str = dd + "天" + hh + "小时" + mm + "分" + ss + "秒";
+        return str;
+      }
+    }
+  },
+  mounted() {
+    setInterval(() => {
+      // console.log(3333333);
+      for (var key in this.list2) {
+        // console.log(2222);
+        this.list2[key]["timeRemaining"] = this.list2[key]["timeRemaining"] - 1;
+        var rightTime = parseInt(this.list2[key]["timeRemaining"]);
+        // var bbb = new Date().getTime();
+        if (rightTime > 0) {
+          // console.log(1111);
+          var dd = Math.floor(rightTime / 60 / 60 / 24);
+          var hh = Math.floor((rightTime / 60 / 60) % 24);
+          var mm = Math.floor((rightTime / 60) % 60);
+          var ss = Math.floor(rightTime % 60);
+        }
+        this.list2[key]["hh"] = hh;
+        this.list2[key]["mm"] = mm;
+        this.list2[key]["ss"] = ss;
+        console.log(
+          (this.list2[key]["djs"] =
+            dd + "天" + hh + "小时" + mm + "分" + ss + "秒")
+        );
+      }
+    }, 1000);
+  },
   computed: {
-            screenWidth() {
+    ...mapState(["userId"]),
+    screenWidth() {
       return this.$root.widthH;
     },
     currentClass() {
-      if (this.widthH >1024) {
+      if (this.widthH > 1024) {
         return "deal";
       } else {
         return "deal2";
       }
     }
   },
-    watch: {
+  watch: {
     screenWidth(val) {
       this.widthH = val;
     }
@@ -193,346 +319,701 @@ export default {
   .main {
     width: 1200px;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    .img_1 {
-      width: 570px;
-      height: 427px;
-      position: relative;
-      margin-top: 60px;
-      &:nth-of-type(odd) {
-        margin-right: 60px;
+    .left {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // justify-content: center;
+      .title {
+        font-size: 30px;
       }
-      img {
-        width: 100%;
-        height: 100%;
-      }
-      .time {
-        position: absolute;
-        top: 40px;
-        right: 30px;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        & > div {
+      .img_1 {
+        width: 570px;
+        height: 427px;
+        position: relative;
+        margin-top: 60px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        .time {
+          position: absolute;
+          top: 40px;
+          right: 30px;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & > div {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span {
+              &:first-of-type {
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px;
+                color: #231815;
+                font-family: "Bold";
+                font-size: 24px;
+                border-radius: 4px;
+                background-color: rgba(208, 208, 7, 1);
+              }
+              &:last-of-type {
+                width: 40px;
+                text-align: center;
+                margin-top: 5px;
+                color: #dddddd;
+                font-family: "Regular";
+                font-size: 10px;
+              }
+            }
+          }
+        }
+        .explain {
+          z-index: 100;
+          position: absolute;
+          top: 150px;
+          left: 50px;
           display: flex;
           flex-direction: column;
-          margin-left: 10px;
           span {
+            color: #fff;
             &:first-of-type {
-              height: 40px;
-              width: 40px;
-              text-align: center;
-              line-height: 40px;
-              color: #231815;
+              width: 166px;
+              font-family: "Reqular";
+              font-size: 22px;
+              // background-color: rgba(208, 208, 7, 0.9);
+            }
+            &:nth-of-type(2) {
+              margin-top: 19px;
+              width: 220px;
+              // background-color: rgba(208, 208, 7, 0.9);
+              font-size: 42px;
               font-family: "Bold";
-              font-size: 24px;
-              border-radius: 4px;
-              background-color: rgba(208, 208, 7, 1);
+            }
+            &:nth-of-type(3) {
+              cursor: pointer;
+              margin-top: 3px;
+              // background-color: rgba(208, 208, 7, 0.9);
+              font-size: 42px;
+              font-family: "Bold";
             }
             &:last-of-type {
-              width: 40px;
+              width: 160px;
+              height: 45px;
+              line-height: 45px;
+              font-size: 16px;
+              border-radius: 2px;
+              margin-top: 40px;
               text-align: center;
-              margin-top: 5px;
-              color: #dddddd;
-              font-family: "Regular";
-              font-size: 10px;
+              font-weight: bold;
+              font-family: "Blod";
+              background-color: #231815;
+              color: rgb(208, 208, 7);
             }
           }
         }
       }
-      .explain {
-        z-index: 100;
-        position: absolute;
-        top: 150px;
-        left: 50px;
+      .img_2 {
+        margin-top: 60px;
+        box-sizing: border-box;
+        width: 570px;
+        height: 300px;
         display: flex;
         flex-direction: column;
-        span {
-          color: #fff;
-          &:first-of-type {
-            width: 166px;
-            font-family: "Reqular";
-            font-size: 22px;
-            background-color: rgba(208, 208, 7, 0.9);
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #231815;
+        position: relative;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          position: absolute;
+          top: -30px;
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+          background-color: #fff;
+        }
+        .time {
+          position: absolute;
+          bottom: 40px;
+          right: 30px;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & > div {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span {
+              &:first-of-type {
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px;
+                color: #231815;
+                font-family: "Bold";
+                font-size: 24px;
+                border-radius: 4px;
+                background-color: rgba(208, 208, 7, 1);
+              }
+              &:last-of-type {
+                width: 40px;
+                text-align: center;
+                margin-top: 5px;
+                color: #999999;
+                font-family: "Regular";
+                font-size: 10px;
+              }
+            }
           }
-          &:nth-of-type(2) {
-            margin-top: 19px;
-            width: 220px;
-            background-color: rgba(208, 208, 7, 0.9);
-            font-size: 42px;
-            font-family: "Bold";
-          }
-          &:nth-of-type(3) {
-            margin-top: 3px;
-            background-color: rgba(208, 208, 7, 0.9);
-            font-size: 42px;
-            font-family: "Bold";
-          }
-          &:last-of-type {
-            width: 160px;
-            height: 45px;
-            line-height: 45px;
-            font-size: 16px;
-            border-radius: 2px;
-            margin-top: 40px;
-            text-align: center;
-            font-weight: bold;
-            font-family: "Blod";
-            background-color: #231815;
-            color: rgb(208, 208, 7);
-          }
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .img_3 {
+        background-image: url("../../../assets/deal/huangse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .img_4 {
+        background-image: url("../../../assets/deal/Middle-hongse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        color: #fff;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
+        .el_1 {
+          margin-top: 18px;
+          font-size: 42px;
+          font-family: "bold";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
+        .el_2 {
+          margin-top: 3px;
+          font-size: 42px;
+          font-family: "bold";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
+
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .img_5 {
+        background-image: url("../../../assets/deal/lanse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
         }
       }
     }
-    .img_2 {
-      margin-top: 60px;
-      box-sizing: border-box;
-      width: 570px;
-      height: 300px;
+    .right {
+      width: 50%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      border: 2px solid #231815;
-      position: relative;
-      &:nth-of-type(odd) {
-        margin-right: 60px;
-      }
+      // justify-content: center;
       .title {
-        position: absolute;
-        top: -30px;
-        width: 181px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        font-size: 22px;
-        font-family: "regular";
-        background-color: #fff;
+        font-size: 30px;
       }
-      .time {
-        position: absolute;
-        bottom: 40px;
-        right: 30px;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        & > div {
+      .img_1 {
+        width: 570px;
+        height: 427px;
+        position: relative;
+        margin-top: 60px;
+        // &:nth-of-type(odd) {
+        //   margin-right: 60px;
+        // }
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        .time {
+          position: absolute;
+          top: 40px;
+          right: 30px;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & > div {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span {
+              &:first-of-type {
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px;
+                color: #231815;
+                font-family: "Bold";
+                font-size: 24px;
+                border-radius: 4px;
+                background-color: rgba(208, 208, 7, 1);
+              }
+              &:last-of-type {
+                width: 40px;
+                text-align: center;
+                margin-top: 5px;
+                color: #dddddd;
+                font-family: "Regular";
+                font-size: 10px;
+              }
+            }
+          }
+        }
+        .explain {
+          z-index: 100;
+          position: absolute;
+          top: 150px;
+          left: 50px;
           display: flex;
           flex-direction: column;
-          margin-left: 10px;
           span {
+            color: #fff;
             &:first-of-type {
-              height: 40px;
-              width: 40px;
-              text-align: center;
-              line-height: 40px;
-              color: #231815;
+              width: 166px;
+              font-family: "Reqular";
+              font-size: 22px;
+              // background-color: rgba(208, 208, 7, 0.9);
+            }
+            &:nth-of-type(2) {
+              margin-top: 19px;
+              width: 220px;
+              // background-color: rgba(208, 208, 7, 0.9);
+              font-size: 42px;
               font-family: "Bold";
-              font-size: 24px;
-              border-radius: 4px;
-              background-color: rgba(208, 208, 7, 1);
+            }
+            &:nth-of-type(3) {
+              cursor: pointer;
+              margin-top: 3px;
+              // background-color: rgba(208, 208, 7, 0.9);
+              font-size: 42px;
+              font-family: "Bold";
             }
             &:last-of-type {
-              width: 40px;
+              width: 160px;
+              height: 45px;
+              line-height: 45px;
+              font-size: 16px;
+              border-radius: 2px;
+              margin-top: 40px;
               text-align: center;
-              margin-top: 5px;
-              color: #999999;
-              font-family: "Regular";
-              font-size: 10px;
+              font-weight: bold;
+              font-family: "Blod";
+              background-color: #231815;
+              color: rgb(208, 208, 7);
             }
           }
         }
       }
-      .el_1,
-      .el_2 {
-        font-size: 42px;
-        color: #231815;
-        font-family: "bold";
+      .img_2 {
+        margin-top: 60px;
+        box-sizing: border-box;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #231815;
+        position: relative;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          position: absolute;
+          top: -30px;
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+          background-color: #fff;
+        }
+        .time {
+          position: absolute;
+          bottom: 40px;
+          right: 30px;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & > div {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span {
+              &:first-of-type {
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px;
+                color: #231815;
+                font-family: "Bold";
+                font-size: 24px;
+                border-radius: 4px;
+                background-color: rgba(208, 208, 7, 1);
+              }
+              &:last-of-type {
+                width: 40px;
+                text-align: center;
+                margin-top: 5px;
+                color: #999999;
+                font-family: "Regular";
+                font-size: 10px;
+              }
+            }
+          }
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
       }
-      .btn {
-        margin-top: 54px;
-        width: 160px;
-        height: 45px;
-        line-height: 45px;
-        font-size: 16px;
-        border-radius: 2px;
-        margin-top: 40px;
-        text-align: center;
-        font-weight: bold;
-        font-family: "Blod";
-        background-color: #231815;
-        color: rgb(208, 208, 7);
+      .img_3 {
+        background-image: url("../../../assets/deal/huangse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
       }
-      .time_t {
-        position: absolute;
-        bottom: 105px;
-        right: 70px;
-        font-family: "regular";
-        font-size: 14px;
-        color: #999999;
-      }
-    }
-    .img_3 {
-      background-image: url("../../../assets/deal/huangse.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      margin-top: 60px;
-      width: 570px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      &:nth-of-type(odd) {
-        margin-right: 60px;
-      }
-      .title {
-        width: 181px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        font-size: 22px;
-        font-family: "regular";
-      }
-      .el_1,
-      .el_2 {
-        font-size: 42px;
-        color: #231815;
-        font-family: "bold";
-      }
-      .btn {
-        margin-top: 54px;
-        width: 160px;
-        height: 45px;
-        line-height: 45px;
-        font-size: 16px;
-        border-radius: 2px;
-        margin-top: 40px;
-        text-align: center;
-        font-weight: bold;
-        font-family: "Blod";
-        background-color: #231815;
-        color: rgb(208, 208, 7);
-      }
-      .time_t {
-        position: absolute;
-        bottom: 105px;
-        right: 70px;
-        font-family: "regular";
-        font-size: 14px;
-        color: #999999;
-      }
-    }
-    .img_4 {
-      background-image: url("../../../assets/deal/Middle-hongse.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      margin-top: 60px;
-      width: 570px;
-      height: 300px;
-      display: flex;
-      color: #fff;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      &:nth-of-type(odd) {
-        margin-right: 60px;
-      }
-      .title {
-        text-align: center;
-        font-size: 22px;
-        font-family: "regular";
-        background-color: rgba(208, 208, 7, 0.9);
-      }
-      .el_1 {
-        margin-top: 18px;
-        font-size: 42px;
-        font-family: "bold";
-        background-color: rgba(208, 208, 7, 0.9);
-      }
-      .el_2 {
-        margin-top: 3px;
-        font-size: 42px;
-        font-family: "bold";
-        background-color: rgba(208, 208, 7, 0.9);
-      }
+      .img_4 {
+        background-image: url("../../../assets/deal/Middle-hongse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        color: #fff;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
+        .el_1 {
+          margin-top: 18px;
+          font-size: 42px;
+          font-family: "bold";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
+        .el_2 {
+          margin-top: 3px;
+          font-size: 42px;
+          font-family: "bold";
+          background-color: rgba(208, 208, 7, 0.9);
+        }
 
-      .btn {
-        margin-top: 54px;
-        width: 160px;
-        height: 45px;
-        line-height: 45px;
-        font-size: 16px;
-        border-radius: 2px;
-        margin-top: 40px;
-        text-align: center;
-        font-weight: bold;
-        font-family: "Blod";
-        background-color: #231815;
-        color: rgb(208, 208, 7);
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
       }
-      .time_t {
-        position: absolute;
-        bottom: 105px;
-        right: 70px;
-        font-family: "regular";
-        font-size: 14px;
-        color: #999999;
-      }
-    }
-    .img_5 {
-      background-image: url("../../../assets/deal/lanse.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      margin-top: 60px;
-      width: 570px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      &:nth-of-type(odd) {
-        margin-right: 60px;
-      }
-      .title {
-        width: 181px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        font-size: 22px;
-        font-family: "regular";
-      }
-      .el_1,
-      .el_2 {
-        font-size: 42px;
-        color: #231815;
-        font-family: "bold";
-      }
-      .btn {
-        margin-top: 54px;
-        width: 160px;
-        height: 45px;
-        line-height: 45px;
-        font-size: 16px;
-        border-radius: 2px;
-        margin-top: 40px;
-        text-align: center;
-        font-weight: bold;
-        font-family: "Blod";
-        background-color: #231815;
-        color: rgb(208, 208, 7);
-      }
-      .time_t {
-        position: absolute;
-        bottom: 105px;
-        right: 70px;
-        font-family: "regular";
-        font-size: 14px;
-        color: #999999;
+      .img_5 {
+        background-image: url("../../../assets/deal/lanse.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-top: 60px;
+        width: 570px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:nth-of-type(odd) {
+          margin-right: 60px;
+        }
+        .title {
+          width: 181px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          font-size: 22px;
+          font-family: "regular";
+        }
+        .el_1,
+        .el_2 {
+          font-size: 42px;
+          color: #231815;
+          font-family: "bold";
+        }
+        .btn {
+          margin-top: 54px;
+          width: 160px;
+          height: 45px;
+          line-height: 45px;
+          font-size: 16px;
+          border-radius: 2px;
+          margin-top: 40px;
+          text-align: center;
+          font-weight: bold;
+          font-family: "Blod";
+          background-color: #231815;
+          color: rgb(208, 208, 7);
+        }
+        .time_t {
+          position: absolute;
+          bottom: 105px;
+          right: 70px;
+          font-family: "regular";
+          font-size: 14px;
+          color: #999999;
+        }
       }
     }
   }
@@ -622,6 +1103,11 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    .title{
+        font-size: .3rem;
+      text-align: center;
+      margin-top: .2rem;
+      }
     .img_1 {
       width: 6.9rem;
       height: 4.27rem;

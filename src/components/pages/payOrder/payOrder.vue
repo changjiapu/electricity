@@ -2,20 +2,20 @@
   <div :class="currentClass">
     <div class="content">
       <div class="title">
-        <span>Select your payment method</span>
-        <span>We recommend you pay by international credit card or PayPal</span>
+        <span>{{$t('m.payOrder.title1')}}</span>
+        <span>{{$t('m.payOrder.title2')}}</span>
       </div>
       <div class="main">
-        <p>Order submitted successfully, please pay as soon as possible!</p>
+        <p>{{$t('m.payOrder.title3')}}</p>
         <div class="main_1">
-          <span>Order no.:</span>
+          <span>{{$t('m.payOrder.title4')}}</span>
           <span>{{paycontent.orderNo}}</span>
         </div>
         <div class="main_2">
-          <span>Order Total:</span>
+          <span>{{$t('m.payOrder.title5')}}</span>
           <span>${{paycontent.money}}</span>
         </div>
-        <div class="main_3">More payment Options</div>
+        <div class="main_3">{{$t('m.payOrder.title6')}}</div>
         <div class="main_4">
           <span
             :class="{active:item.id===currentId}"
@@ -66,7 +66,7 @@
              <div class="apply">APPLY</div>
           </div>
         </div>-->
-        <div class="main_9" @click="CreatePay()">IMMEDIATE PAYMENT</div>
+        <div class="main_9" @click="CreatePay()">{{$t('m.payOrder.title7')}}</div>
       </div>
     </div>
   </div>

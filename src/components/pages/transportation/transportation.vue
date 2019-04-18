@@ -2,8 +2,8 @@
   <div :class="currentClass">
     <div class="content">
       <div class="container">
-        <p class="title">Please choose the mode of transportation you want</p>
-        <p class="title_2">Is the address you'd like to use displayed below? If so, click</p>
+        <p class="title">{{$t('m.transportation.title1')}}</p>
+        <p class="title_2">{{$t('m.transportation.title2')}}</p>
         <div class="main" v-if="!isShowA">
           <span class="t_1">{{isShowAddress.userName}}</span>
           <span
@@ -15,26 +15,26 @@
             <span>{{isShowAddress.userPhone}}</span>
           </div>
           <div class="btn">
-            <span @click="edit(isShowAddress)">edit</span>
-            <span @click="AddressDelete(isShowAddress.addressId)">delete</span>
-            <span @click="gotoAddressList()">Deliver to this address</span>
+            <span @click="edit(isShowAddress)">{{$t('m.transportation.title3')}}</span>
+            <span @click="AddressDelete(isShowAddress.addressId)">{{$t('m.transportation.title4')}}</span>
+            <span @click="gotoAddressList()">{{$t('m.transportation.title5')}}</span>
           </div>
         </div>
-        <div class="add" @click="address()">+ USE A NEW ADDRESS</div>
+        <div class="add" @click="address()">+ {{$t('m.transportation.title6')}}</div>
       </div>
     </div>
     <div class="content2">
-      <p class="title">Please choose the mode of transportation you want</p>
+      <p class="title">{{$t('m.transportation.title7')}}</p>
       <!-- <p class="title_2">Is the address you'd like to use displayed below? If so, click</p> -->
       <div class="main">
         <div class="left">
           <div class="item_cart" v-if="!paramsList.length">
-            <span class="first">Shipment 1 of 1</span>
-            <span>Shipping from {{shopAddress.province}}{{shopAddress.city}}{{shopAddress.addressLine1}}{{shopAddress.addressLine2}}</span>
-            <span>Shipping to:{{isShowAddress.province}},{{isShowAddress.city}},{{isShowAddress.addressLine1}},{{isShowAddress.addressLine2}},{{isShowAddress.zipCode}}</span>
+            <span class="first">{{$t('m.transportation.title8')}}</span>
+            <span>{{$t('m.transportation.title9')}} {{shopAddress.province}}{{shopAddress.city}}{{shopAddress.addressLine1}}{{shopAddress.addressLine2}}</span>
+            <span>{{$t('m.transportation.title10')}}{{isShowAddress.province}},{{isShowAddress.city}},{{isShowAddress.addressLine1}},{{isShowAddress.addressLine2}},{{isShowAddress.zipCode}}</span>
             <span>{{params.productName}}</span>
             <div class="number">
-              <span>${{params.productPrice}} -- Quantity: {{params.quantity}}</span>
+              <span>${{params.productPrice}} -- {{$t('m.transportation.title11')}} {{params.quantity}}</span>
               <el-input-number
                 class="input"
                 v-model="params.quantity"
@@ -44,17 +44,17 @@
                 size="small"
               ></el-input-number>
             </div>
-            <span>Sold by: {{shopAddress.senderName}}</span>
-            <span class="last">Change quantities</span>
+            <span>{{$t('m.transportation.title12')}} {{shopAddress.senderName}}</span>
+            <span class="last">{{$t('m.transportation.title13')}}</span>
           </div>
           <div class="item_cart" v-else>
-            <span class="first">Shipment 1 of 1</span>
-            <span>Shipping from {{shopAddress.province}}{{shopAddress.city}}{{shopAddress.addressLine1}}{{shopAddress.addressLine2}}</span>
-            <span>Shipping to:{{isShowAddress.province}},{{isShowAddress.city}},{{isShowAddress.addressLine1}},{{isShowAddress.addressLine2}},{{isShowAddress.zipCode}}</span>
+            <span class="first">{{$t('m.transportation.title8')}}</span>
+            <span>{{$t('m.transportation.title9')}} {{shopAddress.province}}{{shopAddress.city}}{{shopAddress.addressLine1}}{{shopAddress.addressLine2}}</span>
+            <span>{{$t('m.transportation.title10')}}{{isShowAddress.province}},{{isShowAddress.city}},{{isShowAddress.addressLine1}},{{isShowAddress.addressLine2}},{{isShowAddress.zipCode}}</span>
             <div v-for="(item,index) in paramsList" :key="index" class="item_cart_i">
               <span>{{item.productName}}</span>
               <div class="number">
-                <span>${{item.productPrice}} -- Quantity: {{item.quantity}}</span>
+                <span>${{item.productPrice}} -- {{$t('m.transportation.title11')}} {{item.quantity}}</span>
                 <el-input-number
                   class="input"
                   v-model="item.quantity"
@@ -65,12 +65,12 @@
                 ></el-input-number>
               </div>
             </div>
-            <span>Sold by: {{shopAddress.senderName}}</span>
-            <span class="last">Change quantities</span>
+            <span>{{$t('m.transportation.title12')}} {{shopAddress.senderName}}</span>
+            <span class="last">{{$t('m.transportation.title13')}}</span>
           </div>
         </div>
         <div class="right">
-          <span>Choose a delivery option:</span>
+          <span>{{$t('m.transportation.title14')}}</span>
           <!-- <span>FREE Two-Day Shipping on this order:</span>
           <span>Get fast, free delivery on this order by selecting "FREE Two - Day Shipping with a free trial of Amazon Prime" below.</span>-->
           <el-radio-group class="radio" v-model="ExpressId">
@@ -81,7 +81,7 @@
               @change="getShopDistribution(item.shipId)"
             >{{item.price?`$${item.price}`:''}}{{item.descript}}</el-radio>
           </el-radio-group>
-          <div class="btn" @click="gotoPay()">CONTINUE</div>
+          <div class="btn" @click="gotoPay()">{{$t('m.transportation.title15')}}</div>
         </div>
       </div>
     </div>
@@ -185,7 +185,7 @@ export default {
       AddressDelete(params).then(res => {
         if (res.data.code == 0) {
           this.$message({
-            message: "Delete the success",
+            message: this.$t('m.transportation.tips1'),
             type: "success"
           });
           setTimeout(() => {
@@ -232,13 +232,13 @@ export default {
     gotoPay() {
       //没收货地址先去添加地址
       if (!this.ExpressId) {
-        this.$alert("Please select the delivery method", "Tips", {
+        this.$alert(this.$t('m.transportation.tips2'), "Tips", {
           confirmButtonText: "confirm"
         });
         return;
       }
       if (!this.isShowAddress.addressId) {
-        this.$confirm("You do not have the delivery address!To add??", "Tips", {
+        this.$confirm(this.$t('m.transportation.tips3'), "Tips", {
           confirmButtonText: "confirm",
           cancelButtonText: "cancel",
           type: "warning"

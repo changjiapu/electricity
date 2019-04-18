@@ -5,16 +5,16 @@
       <div class="w">
         <ol class="h_breadcrumb">
           <li class="breadcrumb-item" v-if="widthH<=1024">
-            <a href="#">Home ></a>
+            <a href="#">{{$t('m.orders.history1')}} ></a>
           </li>
           <li class="breadcrumb-item">
-            <a href="#">My Account</a>
+            <a href="#">{{$t('m.orders.history2')}}</a>
           </li>
           <li>></li>
-          <li class="breadcrumb-item active">My Orders</li>
+          <li class="breadcrumb-item active">{{$t('m.orders.history3')}}</li>
         </ol>
         <div class="my_Orders">
-          <span>My Orders</span>
+          <span>{{$t('m.orders.history3')}}</span>
           <div class="my_search">
             <input type="text" name id placeholder="Search all orders">
             <input type="button" value>
@@ -22,19 +22,19 @@
         </div>
         <div class="my_order_table">
           <ul>
-            <li :class="{active:currentTab===0}" @click="Tabs(0)">Orders</li>
-            <li :class="{active:currentTab===1}" @click="Tabs(1)">Unpaid order</li>
-            <li :class="{active:currentTab===2}" @click="Tabs(2)">Wait for the delivery</li>
-            <li :class="{active:currentTab===3}" @click="Tabs(3)">In the delivery</li>
-            <li :class="{active:currentTab===4}" @click="Tabs(4)">Have the goods</li>
-            <li :class="{active:currentTab===5}" @click="Tabs(5)">For a refund</li>
+            <li :class="{active:currentTab===0}" @click="Tabs(0)">{{$t('m.orders.tabs1')}}</li>
+            <li :class="{active:currentTab===1}" @click="Tabs(1)">{{$t('m.orders.tabs2')}}</li>
+            <li :class="{active:currentTab===2}" @click="Tabs(2)">{{$t('m.orders.tabs3')}}</li>
+            <li :class="{active:currentTab===3}" @click="Tabs(3)">{{$t('m.orders.tabs4')}}</li>
+            <li :class="{active:currentTab===4}" @click="Tabs(4)">{{$t('m.orders.tabs5')}}</li>
+            <li :class="{active:currentTab===5}" @click="Tabs(5)">{{$t('m.orders.tabs6')}}</li>
           </ul>
         </div>
         <!-- 订单列表 -->
         <div class="my_order_list">
           <div class="my_order_searchTimes">
             <span>
-              <i>{{total}} orders</i>placed in
+              <i>{{total}} {{$t('m.orders.list1')}}</i>
             </span>
             <div class="my_order_select">
               <select name="public-choice" v-model="couponSelected" @change="getCouponSelected">
@@ -50,7 +50,7 @@
           <div class="order_items" v-for="(item,index) in orderList2" :key="index">
             <div class="order_time">
               <span>
-                Order no.:
+                {{$t('m.orders.list2')}}:
                 <i>{{item.order.orderSn}}</i>
               </span>
               <span>{{item.order.createdTime}}</span>
@@ -60,33 +60,33 @@
                 <img :src="imgUrl+item.product.productImage" alt>
                 <div class="order_size">
                   <p>
-                    Frame:
+                    {{$t('m.orders.order_size1')}}:
                     <i>{{item.product.productName}}</i>
                   </p>
                   <p>
-                    Color:
+                    {{$t('m.orders.order_size2')}}:
                     <i>{{item.productSpec.productSpecs.Color.split("|")[1]}}</i>
                   </p>
                   <p>
-                    Size:
+                    {{$t('m.orders.order_size3')}}:
                     <i>{{item.productSpec.productSpecs.Size}}</i>
                   </p>
                   <p>
-                    Qty:
+                   {{$t('m.orders.order_size4')}}:
                     <i>{{item.productCount}}</i>
                   </p>
                 </div>
               </div>
               <div class="secound" v-if="widthH>1024">
                 <span>
-                  Consignee:
+                  {{$t('m.orders.secound1')}}:
                   <i>{{item.order.consignee}}</i>
                 </span>
                 <span class="total">
-                  Subtotal:
+                  {{$t('m.orders.secound2')}}:
                   <b>{{item.order.orderMoney}}</b>
                 </span>
-                <span>Completed</span>
+                <span>{{$t('m.orders.secound3')}}</span>
               </div>
               <div class="last" v-if="widthH>1024">
                 <img
@@ -95,21 +95,21 @@
                   @click="deleteOrder(item.detailId)"
                 >
                 <p v-if="item.order.orderStatus==3" @click="gotoComment(item)">evaluation</p>
-                <p>after-sales</p>
+                <p>{{$t('m.orders.right1')}}</p>
                 <p
                   class="to_pay"
                   v-if="item.order.orderStatus==0"
                   @click="gotoPay(item.detailId)"
-                >To Pay</p>
+                >{{$t('m.orders.right2')}}</p>
                 <p
                   class="cancel_pay"
                   v-if="item.order.orderStatus==0"
                   @click="cancelOrder(item.detailId)"
-                >Cancel order</p>
+                >{{$t('m.orders.right3')}}</p>
                 <p
                   class="again_pay"
                   v-if="item.order.orderStatus==3||item.order.orderStatus==-3"
-                >Again to Buy</p>
+                >{{$t('m.orders.right4')}}</p>
               </div>
               <div class="last2" v-if="widthH<=1024">
                 <div>
@@ -126,32 +126,32 @@
                     class="to_pay"
                     v-if="item.order.orderStatus==0"
                     @click="gotoPay(item.detailId)"
-                  >To Pay</p>
+                  >{{$t('m.orders.right2')}}</p>
                   <p
                     class="cancel_pay"
                     v-if="item.order.orderStatus==0"
                     @click="cancelOrder(item.detailId)"
-                  >Cancel order</p>
+                  >{{$t('m.orders.right3')}}</p>
                   <p
                     class="again_pay"
                     v-if="item.order.orderStatus==3||item.order.orderStatus==-3"
-                  >Again to Buy</p>
+                  >{{$t('m.orders.right4')}}</p>
                 </div>
               </div>
             </div>
             <div class="order_time2" v-if="widthH<=1024">
               <span>
-                Consignee:
+                 {{$t('m.orders.secound1')}}:
                 <i>{{item.order.consignee}}</i>
               </span>
-              <span v-if="item.order.orderStatus==3" @click="gotoComment(item)">evaluation</span>
-              <span>after-sales</span>
+              <span v-if="item.order.orderStatus==3" @click="gotoComment(item)">{{$t('m.orders.right5')}}</span>
+              <span>{{$t('m.orders.right1')}}</span>
             </div>
           </div>
-          <div class="empty" v-if="orderList2.length==0">This is empty</div>
+          <div class="empty" v-if="orderList2.length==0">{{$t('m.orders.title')}}</div>
           <div class="my_order_searchTimes my_order_searchTimes2">
             <span>
-              <i>{{total}} orders</i>placed in
+              <i>{{total}} {{$t('m.orders.list1')}}</i>
             </span>
             <div class="my_order_select">
               <select name="public-choice" v-model="couponSelected" @change="getCouponSelected">
@@ -209,20 +209,6 @@ export default {
         }
       ],
       couponSelected: "",
-      orderList: [
-        {
-          order: "82459845081",
-          time: " 2018-12-17 14:36:07",
-          src: require("../../../assets/myAccount/order/yanjing.png"),
-          Frame: "Aura",
-          Color: "Champagne",
-          Size: "M",
-          Qty: "1",
-          Consignee: "jason",
-          Subtotal: "$70",
-          status: ""
-        }
-      ],
       orderList2: [],
       imgUrl: "",
       userInfo: "",

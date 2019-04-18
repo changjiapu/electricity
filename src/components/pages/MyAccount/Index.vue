@@ -20,8 +20,8 @@
       </div>
     </div>
     <div class="list_title">
-      <p>Your recently viewed items and featured recommendations</p>
-      <p>Inspired by your browsing history</p>
+      <p>{{$t('m.myAccount.title1')}}</p>
+      <p>{{$t('m.myAccount.title2')}}</p>
     </div>
     <product-list class="product-list"></product-list>
   </div>
@@ -70,7 +70,7 @@ export default {
         {
           src: require("../../../assets/myAccount/help.png"),
           url: "/myAccount/customerSupport",
-          text: "CustomerSupport"
+          text: "Support"
         }
       ]
     };
@@ -80,6 +80,13 @@ export default {
     ProductList
   },
   created() {
+    this.list[0].text=this.$t('m.myAccount.list0')
+    this.list[1].text=this.$t('m.myAccount.list1')
+    this.list[2].text=this.$t('m.myAccount.list2')
+    this.list[3].text=this.$t('m.myAccount.list3')
+    this.list[4].text=this.$t('m.myAccount.list4')
+    this.list[5].text=this.$t('m.myAccount.list5')
+    this.list[6].text=this.$t('m.myAccount.list6')
     this.widthH = this.$root.widthH;
     this.getuserInfo();
   },
@@ -181,7 +188,7 @@ export default {
       font-size: 0.24rem;
       color: #231815;
       font-family: "reg";
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 0.1rem;
     }
     p {
@@ -189,7 +196,7 @@ export default {
       font-size: 0.16rem;
       color: #231815;
       font-family: "reg";
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 0.1rem;
       margin-top: 5px;
     }
@@ -199,7 +206,7 @@ export default {
       height: 0.25rem;
       line-height: 0.25rem;
       text-align: center;
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 0.1rem;
       margin-top: 5px;
       cursor: pointer;
@@ -317,7 +324,7 @@ export default {
       font-size: 24px;
       color: #231815;
       font-family: "reg";
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 10px;
     }
     p {
@@ -325,7 +332,7 @@ export default {
       font-size: 16px;
       color: #231815;
       font-family: "reg";
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 10px;
       margin-top: 5px;
     }
@@ -335,7 +342,7 @@ export default {
       height: 25px;
       line-height: 25px;
       text-align: center;
-      background-color: #f3dd4d;
+      // background-color: #f3dd4d;
       padding: 0 10px;
       margin-top: 5px;
       cursor: pointer;

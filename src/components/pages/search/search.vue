@@ -2,9 +2,9 @@
   <div :class="currentClass">
     <div class="div" v-if="widthH>1024">
       <div class="head">
-        <span>{{total}} results were retrieved for you</span>
+        <span>{{total}} {{$t('m.search.title1')}}</span>
         <el-row>
-          <el-select v-model="sorting" placeholder="SORT BY" @change="sortHandle">
+          <el-select v-model="sorting" :placeholder="$t('m.search.title2')" @change="sortHandle">
             <el-option
               v-for="item in sortList"
               :key="item.title"
@@ -18,7 +18,7 @@
       </div>
       <el-row class="main">
         <div class="left">
-          <span class="title">CATEGORIES</span>
+          <span class="title">{{$t('m.search.title4')}}</span>
           <span
             class="list"
             v-for="(item,index) in side_list1[tabId].cateGoryList"
@@ -102,7 +102,7 @@
             >{{item.paramValue}}</el-checkbox>
           </el-checkbox-group>
           <!-- 价格 -->
-          <span class="title">Price</span>
+          <span class="title">{{$t('m.search.title5')}}</span>
           <div class="slider">
             <span>${{sliderPrice[0]}} - ${{sliderPrice[1]}}</span>
             <el-slider
@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="right">
-          <div class="right-shop">
+          <div class="right-shop" v-if="isSHowproduct">
             <product-item
               class="product_item"
               v-for="(item,index) in productList"
@@ -138,11 +138,11 @@
     </div>
     <div :class="['div',{activeDiv:isShowCt}]" v-else>
       <div class="head">
-        <span class="fenlei" @click="isShowchouTi">FILTERS</span>
+        <span class="fenlei" @click="isShowchouTi">{{$t('m.search.title3')}}</span>
         <el-select
           class="select"
           v-model="sorting"
-          placeholder="SORT BY"
+          :placeholder="$t('m.search.title2')"
           @change="sortHandle"
           size="small"
         >
@@ -154,8 +154,8 @@
           ></el-option>
         </el-select>
       </div>
-      <div class="total">{{total}} results were retrieved for you</div>
-      <div class="main">
+      <div class="total">{{total}} {{$t('m.search.title1')}}</div>
+      <div class="main"  v-if="isSHowproduct">
         <product-item
           v-for="(item,index) in productList"
           :key="index"
@@ -172,7 +172,7 @@
           :total="total"
         ></el-pagination>
       </div>
-      <div class="nodata" v-if="productList.length==0">no data</div>
+      <div class="nodata" v-if="productList.length==0">{{$t('m.search.title6')}}</div>
     </div>
     <div class="chouti" v-if="isShowCt" :style="{height:heightH+'px'}">
       <div class="content">
@@ -266,7 +266,7 @@
               >{{item.paramValue}}</el-checkbox>
             </el-checkbox-group>
           </el-collapse-item>
-          <el-collapse-item title="Price" name="8">
+          <el-collapse-item :title="$t('m.search.title5')" name="8">
             <div class="slider">
               <span>${{sliderPrice[0]}} - ${{sliderPrice[1]}}</span>
               <el-slider
@@ -332,7 +332,8 @@ export default {
       faceList5: [],
       faceList6: [],
       taId: "",
-      tabId: 0
+      tabId: 0,
+      isSHowproduct: true
       // lidList:[]
     };
   },
@@ -362,6 +363,10 @@ export default {
         productName: data
       };
       getListData(params).then(response => {
+        this.isSHowproduct = false;
+        this.$nextTick(() => {
+          this.isSHowproduct = true;
+        });
         this.productList = [];
         this.total = response.data.data.total;
         this.productList = response.data.data.list;
@@ -383,6 +388,10 @@ export default {
         taId: this.taId //趋势id
       };
       getListData(params).then(response => {
+        this.isSHowproduct = false;
+        this.$nextTick(() => {
+          this.isSHowproduct = true;
+        });
         this.productList = [];
         this.total = response.data.data.total;
         this.productList = response.data.data.list;
@@ -404,6 +413,10 @@ export default {
         taId: data //趋势id
       };
       getListData(params).then(response => {
+        this.isSHowproduct = false;
+        this.$nextTick(() => {
+          this.isSHowproduct = true;
+        });
         this.productList = [];
         this.total = response.data.data.total;
         this.productList = response.data.data.list;
@@ -547,8 +560,11 @@ export default {
         disType: this.discount,
         taId: this.taId //趋势id
       };
-
       getListData(data).then(response => {
+        this.isSHowproduct = false;
+        this.$nextTick(() => {
+          this.isSHowproduct = true;
+        });
         this.productList = [];
         this.total = response.data.data.total;
         console.log(this.total);
@@ -586,7 +602,7 @@ export default {
       justify-content: center;
       background-color: #fafafa;
       border: 1px solid #dddddd;
-      height: .55rem;
+      height: 0.55rem;
       width: 100%;
       font-size: 14px;
       font-family: "Reqular";
@@ -608,7 +624,7 @@ export default {
       }
     }
     .main {
-      margin-top: .29rem;
+      margin-top: 0.29rem;
       width: 13rem;
       display: flex;
       justify-content: center;

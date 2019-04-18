@@ -5,23 +5,23 @@
       <div class="w">
         <ol class="h_breadcrumb">
           <li class="breadcrumb-item" v-if="widthH<=1024">
-            <a href="#">Home ></a>
+            <a href="#">{{$t('m.securitySet.title1')}} ></a>
           </li>
           <li class="breadcrumb-item">
-            <a href="#">My Account</a>
+            <a href="#">{{$t('m.securitySet.title2')}}</a>
           </li>
           <li>></li>
-          <li class="breadcrumb-item active">Security</li>
+          <li class="breadcrumb-item active">{{$t('m.securitySet.title3')}}</li>
         </ol>
         <div class="my_Security">
-          <h1>My Security</h1>
-          <p>We will fully protect your account security.</p>
+          <h1>{{$t('m.securitySet.title4')}}</h1>
+          <p>{{$t('m.securitySet.title5')}}</p>
           <!-- 我们将全力保障您的账户安全。。 -->
         </div>
         <div class="my_info">
           <div class="tishi" v-if="isShow">
             <img src="../../../assets/myAccount/xuanzhong.png" alt>
-            <span>Your name has been changed successfully.</span>
+            <span>{{$t('m.securitySet.title6')}}</span>
           </div>
           <ul class="my_infoBox">
             <li class="my_infoList" v-for="(item,index) in infoList" :key="index">
@@ -30,11 +30,11 @@
                   <p>{{item.name}}</p>
                   <span>{{item.text}}</span>
                 </div>
-                <div class="my_InfoRight" @click="changeContent(index)">EDIT</div>
+                <div class="my_InfoRight" @click="changeContent(index)">{{$t('m.securitySet.infoList5')}}</div>
               </div>
               <div class="my_editName" v-if="item.showContent1">
-                <span class="editName1">Change your name</span>
-                <span class="editName2">New name:</span>
+                <span class="editName1">{{$t('m.securitySet.showContent1_1')}}</span>
+                <span class="editName2">{{$t('m.securitySet.showContent1_2')}}</span>
                 <input class="editName3" type="text" v-model="setuserInfo.nickName">
                 <div class="editName4">
                   <input class="editName5" type="button" value="SAVE" @click="updUserNikeName">
@@ -42,20 +42,20 @@
                 </div>
               </div>
               <div class="my_editEmail" v-if="item.showContent2">
-                <span class="editEmail1">Change Email</span>
-                <span class="edit_title">Old email address:</span>
+                <span class="editEmail1">{{$t('m.securitySet.showContent1_3')}}</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_4')}}</span>
                 <span class="old_email">{{userInfo.userEmail}}</span>
-                <span class="edit_title">New email address:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_5')}}</span>
                 <input class="edit_text" type="text" v-model="setuserInfo.newEmail">
-                <span class="edit_title">Re-enter new email:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_6')}}</span>
                 <input class="edit_text" type="text">
-                <span class="edit_title">Password:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_7')}}</span>
                 <input class="edit_text" type="Password" v-model="setuserInfo.password">
-                <span class="edit_title">Type characters:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_8')}}</span>
                 <div class="TypeEditEmal">
                   <input class="TypeEditEmail" type="text" v-model="setuserInfo.code">
                   <img :src="imgURL">
-                  <span @click="newChallenge()">See a new challenge</span>
+                  <span @click="newChallenge()">{{$t('m.securitySet.showContent1_9')}}</span>
                 </div>
                 <div class="editEmail4">
                   <input class="editEmail5" type="button" value="SAVE" @click="updUserEmail()">
@@ -63,17 +63,17 @@
                 </div>
               </div>
               <div class="my_editPhone" v-if="item.showContent3&&userInfo.userPhone">
-                <span class="editPhone1">Change Mobile Phone Number</span>
+                <span class="editPhone1">{{$t('m.securitySet.showContent1_10')}}</span>
                 <div class="del_oldnumber">
                   <p class="edit_title">
-                    Old mobile phone number:
+                    {{$t('m.securitySet.showContent1_11')}}
                     <span class="edit_oldPhone">CN +86 {{item.text}}</span>
                   </p>
                   <a href="#">
                     <img src="../../../assets/myAccount/order/shangchu.png" alt>
                   </a>
                 </div>
-                <span class="edit_title">Mobile number:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_12')}}</span>
                 <input class="editPhone2" type="text" value="US + 1">
                 <input class="editPhone3" type="text" v-model="setuserInfo.phone">
                 <div class="editPhone4">
@@ -82,8 +82,8 @@
                 </div>
               </div>
               <div class="my_editPhone_null" v-if="item.showContent3&&!userInfo.userPhone">
-                <span class="editPhone1">Add Mobile Phone Number</span>
-                <span class="edit_title">Mobile number:</span>
+                <span class="editPhone1">{{$t('m.securitySet.showContent1_13')}}</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_14')}}</span>
                 <input class="editPhone2" type="text" value="US + 1">
                 <input class="editPhone3" type="text" v-model="setuserInfo.phone">
                 <div class="editPhone4">
@@ -92,12 +92,12 @@
                 </div>
               </div>
               <div class="my_editPassword" v-if="item.showContent4">
-                <span class="editPassword1">Change Password</span>
-                <span class="edit_title">Current password:</span>
+                <span class="editPassword1">{{$t('m.securitySet.showContent1_15')}}</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_16')}}</span>
                 <input class="edit_text" type="password" v-model="setuserInfo.password2">
-                <span class="edit_title">New password:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_17')}}</span>
                 <input class="edit_text" type="password" v-model="setuserInfo.password3">
-                <span class="edit_title">Reenter new password:</span>
+                <span class="edit_title">{{$t('m.securitySet.showContent1_18')}}</span>
                 <input class="edit_text" type="password" v-model="setuserInfo.password4">
                 <div class="editPassword4">
                   <input
@@ -140,7 +140,7 @@ export default {
       ],
       infoList: [
         {
-          name: "Name:",
+          name: this.$t('m.securitySet.infoList1'),
           showContent1: false,
           showContent2: false,
           showContent3: false,
@@ -148,7 +148,7 @@ export default {
           text: "zoujie0506"
         },
         {
-          name: "Email:",
+          name:this.$t('m.securitySet.infoList2'),
           showContent1: false,
           showContent2: false,
           showContent3: false,
@@ -156,7 +156,7 @@ export default {
           text: "zoujie0506@126.com"
         },
         {
-          name: "Mobile Phone Number:",
+          name: this.$t('m.securitySet.infoList3'),
           showContent1: false,
           showContent2: false,
           showContent3: false,
@@ -164,7 +164,7 @@ export default {
           text: "133*****8973"
         },
         {
-          name: "Password:",
+          name: this.$t('m.securitySet.infoList4'),
           showContent1: false,
           showContent2: false,
           showContent3: false,

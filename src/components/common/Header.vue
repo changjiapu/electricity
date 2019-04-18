@@ -2,30 +2,27 @@
   <!--/*//头顶部分开始*/-->
   <div :class="[currentClass,{isFixed:sideFixed}]">
     <div class="h_hLeft" v-if="widthH > 1024">
-      <span>FREE SHIPPING AND RETURNS*</span>
+      <span>{{$t('m.Header.title')}}</span>
     </div>
     <div class="h_hRight" v-if="statusFlag == false">
       <span>
-        <router-link to="/login">{{login}}</router-link>
+        <router-link to="/login">{{$t('m.Header.sign_in')}}</router-link>
       </span>
       <span class="border">|</span>
       <span>
-        <router-link to="/register">{{registered}}</router-link>
+        <router-link to="/register">{{$t('m.Header.registered')}}</router-link>
       </span>
     </div>
     <div class="h_hRight" v-else>
       <span>
-        <router-link to="/myAccount/help">{{help}}</router-link>
+        <router-link to="/myAccount/help">{{$t('m.Header.help')}}</router-link>
       </span>
       <span class="border">|</span>
       <span>
-        <router-link to="/myAccount">{{myPage}}</router-link>
+      <router-link to="/myAccount">{{$t('m.Header.my_account')}}</router-link>
       </span>
       <span class="border">|</span>
-      <span>
-        <!--<router-link to=''>{{locout}}</router-link>-->
-        <el-button type="text" @click="locoutBtn" style="font-size:.14rem">{{locout}}</el-button>
-      </span>
+      <span class="locout"  @click="locoutBtn">{{$t('m.Header.locout')}}</span>
     </div>
   </div>
   <!-- 头顶部分结束*/ -->
@@ -87,9 +84,9 @@ export default {
     },
     //退出
     locoutBtn() {
-      this.$confirm("Are you sure you want to quit?", "Tips", {
-        confirmButtonText: "Determine",
-        cancelButtonText: "cancel",
+      this.$confirm(this.$t('m.Header.tip_title1'), "Tips", {
+        confirmButtonText: this.$t('m.Header.tip_title1_2'),
+        cancelButtonText: this.$t('m.Header.tip_title1_3'),
         type: "warning"
       })
         .then(() => {
@@ -124,7 +121,7 @@ export default {
   },
   watch: {
     screenWidth(val) {
-      console.log(val)
+      console.log(val);
       this.widthH = val;
     }
   }
@@ -140,11 +137,11 @@ export default {
   background-color: #231816;
   font-size: 12px;
   color: #cccccc;
-  font-family: "Regular";
+
   &.isFixed {
     position: fixed;
-    top: 0px;
-    z-index: 999;
+    top: 0;
+    z-index: 999999;
   }
   .h_hLeft {
     float: left;
@@ -163,18 +160,27 @@ export default {
       color: #ffffff;
       padding: 0px 10px;
     }
+    .locout{
+      cursor: pointer;
+      color: blue
+    }
   }
 }
 .h_header2 {
   width: 100%;
-  height: 0.6rem;
-  line-height: 0.6rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
   background-color: #231816;
   font-size: 0.12rem;
   color: #cccccc;
-  font-family: "Regular";
+
   padding: 0rem 0.1rem;
   box-sizing: border-box;
+    &.isFixed {
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+  }
   .h_hLeft {
     float: left;
   }

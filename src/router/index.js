@@ -6,9 +6,11 @@ import {
 Vue.use(Router)
 
 const router = new Router({
+  // mode: 'history',
   routes: [{
       path: '/',
-      redirect: '/index/home'
+      component: () => import('@/components/pages/home/home.vue')
+      // redirect: '/index/home'
     },
     {
       path: '/login',
@@ -26,10 +28,7 @@ const router = new Router({
     {
       path: '/index',
       component: resolve => require(['../components/Index.vue'], resolve),
-      children: [{ //主页
-          path: '/index/home',
-          component: () => import('@/components/pages/home/home.vue')
-        },
+      children: [
         {
           path: '/index/bolg',
           component: () => import('@/components/pages/home/bolg.vue')
@@ -83,11 +82,15 @@ const router = new Router({
       name:'/myAccount/orderDetail',
       component: () => import('@/components/pages/orderDetail/orderDetail.vue'),
     },
-
     {
       path: '/myAccount/help',
       name: '/myAccount/help',
       component: resolve => require(['../components/pages/MyAccount/help.vue'], resolve)
+    },
+    {
+      path: '/myAccount/help2',
+      name: '/myAccount/help2',
+      component: resolve => require(['../components/pages/MyAccount/help2.vue'], resolve)
     },
     {
       path: '/myAccount/securityset',

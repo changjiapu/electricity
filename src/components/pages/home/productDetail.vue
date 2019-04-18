@@ -30,7 +30,7 @@
           <img v-for="(item,index) in side_img2" :key="index" :src="item" alt>
           </div>-->
           <div class="params" v-if="isPrescript">
-            <p>1. WHAT DO YOU USE YOUR GLASSES FOR?</p>
+            <p>{{$t('m.productDetail.params1')}}</p>
             <div class="content_1">
               <div
                 :class="{active:prescription1Tab==index}"
@@ -43,21 +43,21 @@
                 <span>{{item.pvPrice?`+$${item.pvPrice}`:'Included'}}</span>
               </div>
             </div>
-            <p>2. ENTER YOUR PRESCRIPTION</p>
+            <p>{{$t('m.productDetail.params2')}}</p>
             <div class="content_2">
               <div class="tabs">
-                <span :class="{tabsActive:currentTab==1}" @click="tabChange(1)">Fill it out online</span>
-                <span :class="{tabsActive:currentTab==2}" @click="tabChange(2)">Upload or send later</span>
+                <span :class="{tabsActive:currentTab==1}" @click="tabChange(1)">{{$t('m.productDetail.params3')}}</span>
+                <span :class="{tabsActive:currentTab==2}" @click="tabChange(2)">{{$t('m.productDetail.params4')}}</span>
                 <span
                   :class="{tabsActive:currentTab==3}"
                   @click="tabChange(3)"
-                >Use my saved prescription</span>
+                >{{$t('m.productDetail.params5')}}</span>
               </div>
               <div v-if="currentTab==1||currentTab==3" class="tabs_1">
-                <p>Prescription Name</p>
+                <p>{{$t('m.productDetail.params6')}}</p>
                 <el-row>
                   <el-col :span="10">
-                    <el-input v-model="prescriptionName" placeholder="  e.g amanda october 2015"></el-input>
+                    <el-input v-model="prescriptionName" :placeholder="$t('m.productDetail.placeholder2')"></el-input>
                   </el-col>
                 </el-row>
                 <el-row class="tab_1_main" v-if="prescription1Tab!=3">
@@ -188,7 +188,7 @@
                     <el-input
                       type="textarea"
                       :rows="8"
-                      placeholder="Additional comment about your prescription?"
+                      :placeholder="$t('m.productDetail.placeholder1')"
                       v-model="comment"
                     ></el-input>
                   </el-col>
@@ -201,10 +201,10 @@
         <div class="right">
           <el-row class="name">
             <span>{{product.productName}}</span>
-            <span>Matte Black Eyeglasses</span>
+            <span>{{product.descript}}</span>
           </el-row>
           <el-row class="color">
-            <span>COLOR</span>
+            <span>{{$t('m.productDetail.right2')}}</span>
             <el-row class="color_item">
               <el-tooltip
                 v-for="(item,index) in color_list"
@@ -221,7 +221,7 @@
             </el-row>
           </el-row>
           <el-row class="size">
-            <span>SIZE</span>
+            <span>{{$t('m.productDetail.right3')}}</span>
             <el-row class="size_item">
               <span
                 :class="{sizeActive:currentSize==index}"
@@ -231,18 +231,18 @@
               >{{item}}</span>
               <el-tooltip placement="right">
                 <div slot="content">
-                  多行信息
+                  <!-- 多行信息
                   <br>第二行信息
                   <br>第二行信息
                   <br>第二行信息
-                  <br>第二行信息
+                  <br>第二行信息 -->
                 </div>
-                <p>Size Guide</p>
+                <p>{{$t('m.productDetail.right4')}}</p>
               </el-tooltip>
             </el-row>
           </el-row>
           <el-row class="price">
-            <span>PRICE</span>
+            <span>{{$t('m.productDetail.right5')}}</span>
             <el-row class="price_item" v-if="productDetail.preferentialPrice">
               <span>${{productDetail.preferentialPrice}}</span>
               <span>${{productDetail.price}}</span>
@@ -253,32 +253,32 @@
 
             <div class="like" v-if="!isLike" @click="AddCollection(productDetail.productId)">
               <img src="../../../assets/product-detail/like1.png" alt>
-              <span>WISH LISH</span>
+              <span>{{$t('m.productDetail.right6')}}</span>
             </div>
             <div class="like" v-else @click="AddCollection(productDetail.productId)">
               <img src="../../../assets/product-detail/like2.png" alt>
-              <span>WISH LISH</span>
+              <span>{{$t('m.productDetail.right6')}}</span>
             </div>
           </el-row>
           <el-row class="btn">
-            <span @click="gotoPay()">SHOP NOW</span>
-            <span @click="addCart(productDetail)">ADD TO CART</span>
+            <span @click="gotoPay()">{{$t('m.productDetail.right7')}}</span>
+            <span @click="addCart(productDetail)">{{$t('m.productDetail.right8')}}</span>
           </el-row>
           <el-row class="Rate">
-            <span>EVALUATION</span>
+            <span>{{$t('m.productDetail.right9')}}</span>
             <el-row class="Rate_item">
               <span>10</span>
-              <span>Points</span>
+              <span>{{$t('m.productDetail.right10')}}</span>
               <el-rate v-model="value5" disabled text-color="#ff9900"></el-rate>
             </el-row>
           </el-row>
           <el-row class="detail">
             <el-row class="tabs">
-              <span :class="{active:currentTabs2==1}" @click="detailTabs(1)">Frame Details</span>
+              <span :class="{active:currentTabs2==1}" @click="detailTabs(1)">{{$t('m.productDetail.right11')}}</span>
               <span
                 :class="{active:currentTabs2==2}"
                 @click="detailTabs(2)"
-              >Reviews ({{commentList.total}})</span>
+              >{{$t('m.productDetail.right12')}} ({{commentList.total}})</span>
             </el-row>
             <el-row v-if="currentTabs2==1" class="content_2">
               <p>{{product.descript}}</p>
@@ -288,7 +288,7 @@
             </el-row>
             <el-row v-if="currentTabs2==2" class="comment">
               <span class="title">
-                Newest first
+                {{$t('m.productDetail.right13')}}
                 <span>></span>
               </span>
               <div class="comment_list" v-for="(item,index) in commentList.list" :key="index">
@@ -298,14 +298,14 @@
                 </div>
                 <div class="list_2">
                   <span>{{item.firstName}}{{item.lastName}} In {{item.payTime}}</span>
-                  <span>Color: {{item.productSpecs.Color.split("|")[1]}}; Size: L</span>
+                  <span>{{$t('m.productDetail.right14')}}: {{item.productSpecs.Color.split("|")[1]}}; {{$t('m.productDetail.right15')}}: L</span>
                 </div>
                 <div class="list_3">{{item.content}}</div>
                 <div class="list_4">
                   <img v-for="(item2,index) in item.imgList" :key="index" :src="imgUrl+item2" alt>
                 </div>
                 <div class="list_5">
-                  <span>Was this review helpful?</span>
+                  <span>{{$t('m.productDetail.right16')}}</span>
                   <span
                     v-if="!item.thumbUp"
                     class="zan"
@@ -316,8 +316,8 @@
                 </div>
               </div>
               <div class="list6">
-                <span @click="allReviews">READ ALL REVIEWS</span>
-                <span>WRITE A PRODUCT REVIEW</span>
+                <span @click="allReviews">{{$t('m.productDetail.right17')}}</span>
+                <span>{{$t('m.productDetail.right18')}}</span>
               </div>
             </el-row>
           </el-row>
@@ -340,24 +340,29 @@
             <span>VIEW MORE</span>
           </el-row>
           </el-row>-->
-          <P class="hot_title">Hot recommended</P>
-          <el-row class="img_item" v-for="(item,index) in side_img3" :key="index">
-            <el-row class="bg_img" :style="{backgroundImage:'url('+item+')'}"></el-row>
+          <P class="hot_title" v-if="HotProduct.length>0">{{$t('m.productDetail.HotProduct1')}}</P>
+          <div
+            class="img_item"
+            v-for="(item,index) in HotProduct"
+            :key="index"
+            @click="gotoDetail(item.productId)"
+          >
+            <el-row class="bg_img" :style="{backgroundImage:'url('+imgUrl+item.productImage+')'}"></el-row>
             <el-row class="params">
-              <span>DC17150 | MAN</span>
-              <span>$299</span>
+              <span>{{item.productName}}</span>
+              <span>${{item.price}}</span>
             </el-row>
-          </el-row>
+          </div>
         </div>
       </section>
-      <section class="product_list">
-        <p>Similar Styles</p>
+      <section class="product_list" v-if="StyleProduct.length>0">
+        <p>{{$t('m.productDetail.HotProduct2')}}</p>
         <div class="content_2">
-          <div class="img_list" v-for="(item,index) in StyleProduct" :key="index">
+          <div class="img_list" v-for="(item,index) in StyleProduct" :key="index"   @click="gotoDetail(item.productId)">
             <div class="list_item" :style="{backgroundImage:'url('+imgUrl+item.productImage+')'}"></div>
             <span>{{item.productName}}</span>
             <span>${{item.price}}</span>
-            <span>SHOP NOW</span>
+            <span>{{$t('m.productDetail.HotProduct3')}}</span>
           </div>
         </div>
       </section>
@@ -371,11 +376,11 @@
     <!-- 移动端页面 -->
     <div class="content" v-else>
       <div class="name">
-        <span>BRIS DC17150</span>
-        <span>Matte Black Eyeglasses</span>
+        <span>{{product.productName}}</span>
+        <span>{{product.descript}}</span>
       </div>
       <div class="color">
-        <span class="title">Color</span>
+        <span class="title">{{$t('m.productDetail.iphone1')}}</span>
         <span
           :class="{colorActive:currentColor==index}"
           :style="{backgroundColor:item[0]}"
@@ -399,7 +404,7 @@
         <img :src="imgUrl+currentImage">
       </div>
       <div class="size">
-        <p>SIZE</p>
+        <p>{{$t('m.productDetail.iphone2')}}</p>
         <span
           :class="{sizeActive:currentSize==index}"
           v-for="(item,index) in size_list"
@@ -414,7 +419,7 @@
         </div>
       </div>
       <div class="price">
-        <span>PRICE</span>
+        <span>{{$t('m.productDetail.iphone3')}}</span>
         <div class="price_item" v-if="productDetail.preferentialPrice">
           <span>${{productDetail.preferentialPrice}}</span>
           <span>${{productDetail.price}}</span>
@@ -424,14 +429,14 @@
         </div>
       </div>
       <div class="btn">
-        <span @click="gotoPay()">SHOP NOW</span>
-        <span @click="addCart(productDetail)">ADD TO CART</span>
+        <span @click="gotoPay()">{{$t('m.productDetail.iphone4')}}</span>
+        <span @click="addCart(productDetail)">{{$t('m.productDetail.iphone5')}}</span>
       </div>
       <div class="zhedie">
         <el-collapse v-model="activeNames" accordion>
           <el-collapse-item v-if="isPrescript" class="item_1" title="PRESCRIPTION" name="1">
             <div class="params">
-              <p>1. WHAT DO YOU USE YOUR GLASSES FOR?</p>
+              <p>{{$t('m.productDetail.iphone6')}}</p>
               <div class="content_1">
                 <div
                   :class="{active:prescription1Tab==index}"
@@ -444,24 +449,24 @@
                   <span>{{item.pvPrice?`+$${item.pvPrice}`:'Included'}}</span>
                 </div>
               </div>
-              <p>2. ENTER YOUR PRESCRIPTION</p>
+              <p>{{$t('m.productDetail.iphone7')}}</p>
               <div class="content_2">
                 <div class="tabs">
-                  <span :class="{tabsActive:currentTab==1}" @click="tabChange(1)">Fill it out online</span>
+                  <span :class="{tabsActive:currentTab==1}" @click="tabChange(1)">{{$t('m.productDetail.iphone8')}}</span>
                   <span
                     :class="{tabsActive:currentTab==2}"
                     @click="tabChange(2)"
-                  >Upload or send later</span>
+                  >{{$t('m.productDetail.iphone8')}}</span>
                   <span
                     :class="{tabsActive:currentTab==3}"
                     @click="tabChange(3)"
-                  >Use my saved prescription</span>
+                  >{{$t('m.productDetail.iphone9')}}</span>
                 </div>
                 <div v-if="currentTab==1||currentTab==3" class="tabs_1">
-                  <p>Prescription Name</p>
+                  <p>{{$t('m.productDetail.iphone10')}}</p>
                   <el-row>
                     <el-col :span="20">
-                      <el-input v-model="prescriptionName" placeholder="  e.g amanda october 2015"></el-input>
+                      <el-input v-model="prescriptionName" :placeholder="$t('m.productDetail.placeholder2')"></el-input>
                     </el-col>
                   </el-row>
                   <el-row class="tab_1_main" v-if="prescription1Tab!=3">
@@ -592,7 +597,7 @@
                       <el-input
                         type="textarea"
                         :rows="4"
-                        placeholder="Additional comment about your prescription?"
+                        :placeholder="$t('m.productDetail.placeholder1')"
                         v-model="comment"
                       ></el-input>
                     </el-col>
@@ -611,7 +616,7 @@
           <el-collapse-item :title="'Reviews ('+commentList.total+')'" name="4" class="item_4">
             <div class="comment">
               <span class="title">
-                Newest first
+               {{$t('m.productDetail.iphone11')}}
                 <span>></span>
               </span>
               <div class="comment_list" v-for="(item,index) in commentList.list" :key="index">
@@ -621,14 +626,14 @@
                 </div>
                 <div class="list_2">
                   <span>{{item.firstName}}{{item.lastName}} In {{item.payTime}}</span>
-                  <span>Color: {{item.productSpecs.Color.split("|")[1]}}; Size: L</span>
+                  <span>{{$t('m.productDetail.iphone12')}}: {{item.productSpecs.Color.split("|")[1]}}; {{$t('m.productDetail.iphone13')}}: L</span>
                 </div>
                 <div class="list_3">{{item.content}}</div>
                 <div class="list_4">
                   <img v-for="(item2,index) in item.imgList" :key="index" :src="imgUrl+item2" alt>
                 </div>
                 <div class="list_5">
-                  <span>Was this review helpful?</span>
+                  <span>{{$t('m.productDetail.iphone14')}}</span>
                   <span
                     v-if="!item.thumbUp"
                     class="zan"
@@ -639,17 +644,17 @@
                 </div>
               </div>
               <div class="list6">
-                <span @click="allReviews">READ ALL REVIEWS</span>
-                <span>WRITE A PRODUCT REVIEW</span>
+                <span @click="allReviews">{{$t('m.productDetail.iphone15')}}</span>
+                <span>{{$t('m.productDetail.iphone16')}}</span>
               </div>
             </div>
           </el-collapse-item>
         </el-collapse>
       </div>
-      <div class="banner_2">
-        <p>Similar Styles</p>
+      <div class="banner_2" v-if="StyleProduct.length>0">
+        <p>{{$t('m.productDetail.iphone17')}}</p>
         <el-carousel v-if="widthH<=1024" :interval="5000" height="3.5rem" arrow="always">
-          <el-carousel-item v-for="(item,index) in StyleProduct" :key="index" class="banner_item">
+          <el-carousel-item v-for="(item,index) in StyleProduct" :key="index" class="banner_item" @click="gotoDetail(item.productId)">
             <img style="height:80%;width:80%" :src="imgUrl+item.productImage">
             <span>{{item.productName}}</span>
             <span>${{item.price}}</span>
@@ -710,7 +715,8 @@ export default {
       value: "",
       productDetail: [], //当前展示的产品规格的详情
       productList: [], //产品规格集合
-      StyleProduct: [], //下边分类商品列表
+      StyleProduct: [], //下边商品列表
+      HotProduct: [], //左侧分类列表
       widthH: "",
       product: [],
       baseProp: [], //基本属性
@@ -796,6 +802,7 @@ export default {
           console.log(color_list2);
           // 下边分类商品列表
           this.StyleProduct = res.data.data.StyleProduct;
+          this.HotProduct = res.data.data.HotProduct;
           this.product = res.data.data.product;
           //基础属性 拆分
           let baseProp = res.data.data.product.baseProp;
@@ -821,6 +828,11 @@ export default {
           console.log(baseProp4);
         }
       });
+    },
+    gotoDetail(id) {
+      this.getProductDetail(id);
+      this.getPrescriptionKVList();
+      this.getCommentList(5, id, 1, 3, this.userId);
     },
     //获取定义处方信息
     getPrescriptionKVList() {
@@ -900,10 +912,10 @@ export default {
       // } else {
       //   this.sideFixed = false;
       // }
-      if(scrollTop<2300){
-            this.sideFixed = true;
-      }else{
-               this.sideFixed = false;
+      if (scrollTop < 2300) {
+        this.sideFixed = true;
+      } else {
+        this.sideFixed = false;
       }
       if (scrollTop > this.h) {
         this.h += 400;
@@ -1048,7 +1060,7 @@ export default {
           this.prescription[2].Cylinder == "" ||
           this.prescription[3].Sphere == ""
         ) {
-          this.$alert("Please select prescription", "Tips", {
+          this.$alert(this.$t('m.productDetail.tips1'), "Tips", {
             confirmButtonText: "confirm"
           });
           return;
@@ -1071,7 +1083,7 @@ export default {
               addShopCart(params).then(response => {
                 if (response.data.code == 0) {
                   _this.$message({
-                    message: "Add a success",
+                    message:this.$t('m.productDetail.tips2'),
                     type: "success"
                   });
                 }
@@ -1090,7 +1102,7 @@ export default {
         addShopCart(params).then(response => {
           if (response.data.code == 0) {
             _this.$message({
-              message: "Add a success",
+              message: this.$t('m.productDetail.tips2'),
               type: "success"
             });
           }
@@ -1116,7 +1128,7 @@ export default {
           this.prescription[2].Cylinder == "" ||
           this.prescription[3].Sphere == ""
         ) {
-          this.$alert("Please select prescription", "Tips", {
+          this.$alert(this.$t('m.productDetail.tips1'), "Tips", {
             confirmButtonText: "confirm"
           });
           return;
@@ -1217,9 +1229,9 @@ export default {
         dataFailure: dataFailure //0取消收藏 1收藏
       };
       AddCollection(params).then(res => {
-        // if (res.data.code == 0) {
+        // if (res.data.code == 0) {  
         this.$message({
-          message: "Collection of success",
+          message: this.$t('m.productDetail.tips3'),
           type: "success"
         });
         // }
@@ -1227,7 +1239,7 @@ export default {
     },
     // 判断是否登陆然后跳转登陆页的弹框
     judgeIslogn() {
-      this.$confirm("Please log in first. Do you want to continue?", "Tips", {
+      this.$confirm(this.$t('m.productDetail.tips4'), "Tips", {
         confirmButtonText: "confirm ",
         cancelButtonText: "cancel",
         type: "warning"
@@ -2061,8 +2073,8 @@ export default {
             align-items: center;
             margin-top: 0.15rem;
             span {
-              height: 0.35rem;
-              width: 0.35rem;
+              height: 0.25rem;
+              width: 0.25rem;
               border-radius: 100%;
               box-sizing: border-box;
               padding: 0.1rem;
@@ -2090,8 +2102,8 @@ export default {
             align-items: center;
             margin-top: 10px;
             span {
-              height: 0.35rem;
-              width: 0.35rem;
+              height: 0.25rem;
+              width: 0.25rem;
               border-radius: 100%;
               color: #999999;
               border: 1px solid #999999;
@@ -2156,8 +2168,8 @@ export default {
             align-items: center;
             cursor: pointer;
             img {
-              height: 0.4rem;
-              width: 0.4rem;
+              height: 0.25rem;
+              width: 0.25rem;
             }
           }
         }

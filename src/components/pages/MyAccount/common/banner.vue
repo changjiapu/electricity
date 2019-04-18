@@ -6,7 +6,7 @@
       </div>
       <div class="el-tit">
         <b>{{userInfo.nickName}}</b>
-        <p>Morning，Welcome to Jimoptical glasses.</p>
+        <p>{{$t('m.myAccoubtBanner.title')}}</p>
       </div>
     </div>
   </div>

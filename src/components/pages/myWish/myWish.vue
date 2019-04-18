@@ -1,15 +1,15 @@
 <template>
   <div :class="currentClass">
     <div class="main2">
-      <div class="title">MY WISH LIST</div>
-      <div class="title2">( {{wishList.length}} item in wish list )</div>
+      <div class="title">{{$t('m.myWish.title1')}}</div>
+      <div class="title2">( {{wishList.length}} {{$t('m.myWish.title2')}} )</div>
       <div class="main" v-if="wishList.length==0">
         <div class="bg_img"></div>
-        <span class="text_1">My wish is Empty</span>
-        <span class="text_2">You have no items in your My wish</span>
+        <span class="text_1">{{$t('m.myWish.title3')}}</span>
+        <span class="text_2">{{$t('m.myWish.title4')}}</span>
         <div class="btn">
-          <router-link to="/search">TO SHOPING</router-link>
-          <router-link to="/index/home">BACK HOME</router-link>
+          <router-link to="/search/1/0">{{$t('m.myWish.title5')}}</router-link>
+          <router-link to="/">{{$t('m.myWish.title6')}}</router-link>
         </div>
       </div>
       <div class="cart_item" v-else v-for="(item,index) in wishList" :key="index">
@@ -19,26 +19,26 @@
         <div class="right2">
           <div class="top">
             <div class="top_1">
-              <span>Frame:</span>
+              <span>{{$t('m.myWish.title7')}}</span>
               <span>{{item.product.productName}}</span>
               <span>${{item.product.price}}</span>
             </div>
             <div class="top_2">
-              <span>Color:</span>
+              <span>{{$t('m.myWish.title8')}}</span>
               <span>{{item.product.baseProp.Color}}</span>
             </div>
             <div class="top_2">
-              <span>Size:</span>
+              <span>{{$t('m.myWish.title9')}}</span>
               <span>{{item.product.baseProp.Size}}</span>
             </div>
             <div class="tip_3">
-              <span>Qty:</span>
+              <span>{{$t('m.myWish.title10')}}</span>
               <span>1</span>
             </div>
           </div>
           <div class="bottom">
-            <span @click="addCart(item.productId)">ADD TO CART</span>
-            <span @click="delCollection(item.collectId)">DELETE</span>
+            <span @click="addCart(item.productId)">{{$t('m.myWish.title11')}}</span>
+            <span @click="delCollection(item.collectId)">{{$t('m.myWish.title12')}}</span>
           </div>
         </div>
       </div>

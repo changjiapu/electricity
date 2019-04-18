@@ -249,6 +249,10 @@ export default {
         img {
           width: 100%;
           height: 100%;
+          transition: all 0.4s;  
+        }
+        img:hover{
+          transform: scale(1.1); 
         }
       }
       .list_2 {
@@ -293,7 +297,7 @@ export default {
         cursor: pointer;
         width: .3rem;
         height: .3rem;
-        background-color: #f4d925;
+        background-color: #f6be00;
         border-radius: 100%;
         position: absolute;
         top: .22rem;

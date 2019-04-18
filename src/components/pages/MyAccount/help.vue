@@ -1,18 +1,18 @@
 <template>
   <div :class="currentClass">
     <div class="h_banner">
-      <div class="h_box">How Can We Help?</div>
+      <div class="h_box">{{$t('m.help.title1')}}</div>
     </div>
     <div class="w">
       <ol class="h_breadcrumb">
         <li class="breadcrumb-item" v-if="widthH<=1024">
-          <a href="#">Home ></a>
+          <a href="#">{{$t('m.help.title2')}} ></a>
         </li>
         <li class="breadcrumb-item">
-          <a href="#">My Account</a>
+          <a href="#">{{$t('m.help.title3')}}</a>
         </li>
         <li>></li>
-        <li class="breadcrumb-item active">Help</li>
+        <li class="breadcrumb-item active">{{$t('m.help.title4')}}</li>
       </ol>
       <div class="h_center_banner">
         <div v-for="(item,index) in list" @click="jump(item.url)" :key="index">
@@ -29,17 +29,12 @@
               @click="currenTabs(index)"
             >{{item.helpTitle}}</li>
             <li class="only">
-              For all enquires please
-              <a href="#">Contact us.</a>
+              {{$t('m.help.title5')}}
             </li>
           </ul>
         </div>
         <div class="h_table_right">
-          <h1 class="top">{{helpList[currenTab].helpInstructions}}</h1>
-          <dl v-for="(item,index) in  helpList[currenTab].helpList" :key="index">
-            <dt>{{item.helpTitle}}</dt>
-            <dd v-for="(item2,index) in item.helpInstructionsList" :key="index">-{{item2}}</dd>
-          </dl>
+          <div v-html='helpList[currenTab].helpInstructions' class="ql-editor"></div>
         </div>
       </div>
     </div>
@@ -52,46 +47,41 @@ export default {
     return {
       widthH: "",
       currenTab: 0,
-      tableList: [
-        "SHIPPING & RETURNS",
-        "SHOPPING ONLINE",
-        "WARRANTY & REPAIRS"
-      ],
       list: [
         {
           src: require("../../../assets/myAccount/Orders.png"),
           url: "/myAccount/orders",
-          text: "ORDERS"
+          text:this.$t('m.help.list1')
         },
         {
           src: require("../../../assets/myAccount/Payment.png"),
           url: "/myAccount/payment",
-          text: "PAYMENT"
+          text: this.$t('m.help.list2')
         },
         {
           src: require("../../../assets/myAccount/Addresses.png"),
           url: "/myAccount/address",
-          text: "ADDRESSES"
+          text: this.$t('m.help.list3')
         },
         {
           src: require("../../../assets/myAccount/securityset.png"),
           url: "/myAccount/securityset",
-          text: "SECURITY SET"
+          text: this.$t('m.help.list4')
         },
         {
           src: require("../../../assets/myAccount/Giftcards.png"),
           url: "/myAccount/giftcards",
-          text: "GIFT CARDS"
+          text: this.$t('m.help.list5')
         },
         {
           src: require("../../../assets/myAccount/help.png"),
           url: "/myAccount/help",
-          text: "HELP"
+          text: this.$t('m.help.list6')
         },
         {
           src: require("../../../assets/myAccount/help.png"),
           url: "/myAccount/customerSupport",
-          text: "Support"
+          text: this.$t('m.help.list7')
         }
       ],
       userInfo: {},
@@ -252,28 +242,6 @@ export default {
       padding-top: 30px;
       width: 1000px;
       padding-left: 80px;
-      .top {
-        color: #231815;
-        font-size: 32px;
-        font-family: "Regular";
-        padding-bottom: 49px;
-      }
-      dl {
-        margin-bottom: 39px;
-        dt {
-          color: #231815;
-          font-size: 22px;
-          font-family: "Regular";
-          padding-bottom: 19px;
-          font-weight: 700;
-        }
-        dd {
-          margin-bottom: 20px;
-          font-size: 14px;
-          color: #231815;
-          font-family: "regular";
-        }
-      }
     }
   }
 }
@@ -341,7 +309,8 @@ export default {
     justify-content: space-between;
     .h_table_left {
       padding-top: 0.3rem;
-      //   width: 2.6rem;
+      width: 2rem;
+      box-sizing: border-box;
       font-size: 0.14rem;
       border-right: 1px solid #eeeeee;
       li {
@@ -369,31 +338,25 @@ export default {
     }
     .h_table_right {
       padding-top: 0.3rem;
-      //   width: 10rem;
-      padding-left: 0.8rem;
-      .top {
-        color: #231815;
-        font-size: 0.32rem;
-        font-family: "Regular";
-        padding-bottom: 0.49rem;
-      }
-      dl {
-        margin-bottom: 0.39rem;
-        dt {
-          color: #231815;
-          font-size: 0.22rem;
-          font-family: "Regular";
-          padding-bottom: 0.19rem;
-          font-weight: 700;
-        }
-        dd {
-          margin-bottom: 0.2rem;
-          font-size: 0.14rem;
-          color: #231815;
-          font-family: "regular";
-        }
-      }
+       flex: 1;
+      // padding-left: 0.8rem;
+      box-sizing: border-box;
     }
   }
+}
+.ql-editor {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 1.42;
+    height: 100%;
+    outline: none;
+    overflow-y: auto;
+    padding: 12px 15px;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 </style>

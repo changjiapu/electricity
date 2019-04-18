@@ -1,24 +1,24 @@
 <template>
   <div class="ell-bac">
     <div class="ell-container">
-      <router-link to="/index/home">
-        <span class="back">Back home</span>
+      <router-link to="./">
+        <span class="back">{{$t('m.login.title1')}}</span>
       </router-link>
-      <router-link to="/index/home">
+      <router-link to="./">
         <img class="ell-logImg" src="../../../assets/login/logo.png" alt>
       </router-link>
-      <div class="ell-b">Login</div>
-      <div class="ell-we">Welcome to Jmoptical</div>
+      <div class="ell-b">{{$t('m.login.title2')}}</div>
+      <div class="ell-we">{{$t('m.login.title3')}}</div>
       <!-- <div id="google-signin-button">goole</div> -->
       <div class="ell-btn">
         <a href="javascript:void(0)" @click="facebook('facebook')">
-          SIGN IN WITH FACEBOOK
+          {{$t('m.login.title4')}}
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-facebook"></use>
           </svg>
         </a>
         <a id="google-signin-button">
-          SIGN IN WITH GOOGLE
+         {{$t('m.login.title5')}}
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-facebook"></use>
           </svg>
@@ -29,13 +29,13 @@
       <div v-if="show" class="ell-prompt" v-html="errTxt"></div>
       <input type="text" placeholder="Email" v-model="email">
       <input type="password" placeholder="Password" v-model="password">
-      <button class="ell-sign" @click="signIn">SIGN IN</button>
+      <button class="ell-sign" @click="signIn">{{$t('m.login.title6')}}</button>
       <div class="ell-bottom">
-        <p @click="jump">Forgot Password?</p>
-        <p @click="jumps">Join Free</p>
+        <p @click="jump">{{$t('m.login.title7')}}</p>
+        <p @click="jumps">{{$t('m.login.title8')}}</p>
       </div>
     </div>
-    <div class="ell-bq">©️2018 JMOPTICAL Eyewear</div>
+    <div class="ell-bq">{{$t('m.login.title9')}}</div>
   </div>
 </template>
 <script>
@@ -50,7 +50,7 @@ export default {
       password: "",
       email: "",
       show: false,
-      errTxt: "Login and password are required."
+      errTxt: this.$t('m.login.tips1')
     };
   },
   created() {
@@ -73,7 +73,7 @@ export default {
       gapi.signin2.render("google-signin-button", {
         onsuccess: this.onSignIn,
         scope: "profile email",
-        width: 200,
+        width: 300,
         height: 50,
         longtitle: true,
         theme: "dark"
@@ -98,11 +98,10 @@ export default {
             sessionStorage.setItem("userId", response.data.data.userId);
             this.setToken(response.data.data.token);
             this.setUserId(response.data.data.userId);
-            this.$router.push("./");
+            this.$router.push("/");
           } else {
             this.show = true;
-            this.errTxt =
-              "Invalid username or password <br> (check your CAPS LOCK key)";
+            this.errTxt =this.$t('m.login.tips2');
           }
         });
       }
@@ -133,10 +132,10 @@ export default {
                 sessionStorage.setItem("userId", data.data.data.userId);
                 _this.setToken(data.data.data.token);
                 _this.setUserId(data.data.data.userId);
-                _this.$router.push("./");
+                _this.$router.push("/");
               } else {
                 _this.show = true;
-                _this.errTxt = "Logon failed";
+                _this.errTxt = this.$t('m.login.tips3');
               }
             });
           });
@@ -158,10 +157,10 @@ export default {
                   sessionStorage.setItem("userId", data.data.data.userId);
                   _this.setToken(data.data.data.token);
                   _this.setUserId(data.data.data.userId);
-                  _this.$router.push("./");
+                  _this.$router.push("/");
                 } else {
                   _this.show = true;
-                  _this.errTxt = "Logon failed";
+                  _this.errTxt = this.$t('m.login.tips1');
                 }
               });
             });
@@ -184,10 +183,10 @@ export default {
           sessionStorage.setItem("userId", res.data.data.userId);
           _this.setToken(res.data.data.token);
           _this.setUserId(res.data.data.userId);
-          _this.$router.push("./");
+          _this.$router.push("/");
         } else {
           _this.show = true;
-          _this.errTxt = "Logon failed";
+          _this.errTxt = this.$t('m.login.tips1');
         }
       });
     },
@@ -253,7 +252,7 @@ export default {
   border: none;
   outline: none;
   background: transparent;
-  /* border: 1px solid #e8e316; */
+  border: 1px solid #e8e316;
   height: 45px;
   line-height: 45px;
   color: #ffffff;

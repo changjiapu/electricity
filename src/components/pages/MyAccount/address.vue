@@ -3,15 +3,15 @@
     <div class="w">
       <History :history="history"></History>
       <div class="my_address">
-        <h1>Your Addresses</h1>
+        <h1>{{$t('m.address.address1')}}</h1>
         <ul>
           <li @click="jump">
             <span>+</span>
-            <p>Add addressrs</p>
+            <p>{{$t('m.address.address2')}}</p>
           </li>
           <li v-for="(item,index) in addressList" :key="index">
             <div class="my_addressTop">
-              Default:
+              {{$t('m.address.address3')}}:
               <span>{{item.isDefault?'true':'false'}}</span>
             </div>
             <div class="my_addressCenter">
@@ -21,18 +21,18 @@
               >{{item.province}}{{item.city}}{{item.addressLine1}}{{item.addressLine2}}{{item.zipCode}}</div>
               <div class="city">{{item.country}}</div>
               <div class="phone">
-                phone:
+                {{$t('m.address.address4')}}:
                 <span>{{item.userPhone}}</span>
               </div>
-              <div class="add">Add delivery instructions</div>
+              <div class="add">{{$t('m.address.address5')}}</div>
               <div class="btn">
-                <span @click="edit(item)">edit</span>
-                <span @click="AddressDelete(item.addressId)">delete</span>
+                <span @click="edit(item)">{{$t('m.address.address6')}}</span>
+                <span @click="AddressDelete(item.addressId)">{{$t('m.address.address7')}}</span>
                 <span
                   v-if="!item.isDefault"
                   @click="Default(item.addressId,item.isDefault)"
-                >Set to default</span>
-                <span v-else @click="Default(item.addressId,item.isDefault)">Cancel the default</span>
+                >{{$t('m.address.address8')}}</span>
+                <span v-else @click="Default(item.addressId,item.isDefault)">{{$t('m.address.address9')}}</span>
               </div>
             </div>
           </li>
@@ -134,7 +134,7 @@ export default {
       AddressDelete(params).then(res => {
         if (res.data.code == 0) {
           this.$message({
-            message: "Delete the success",
+            message: this.$t('m.address.tips1'),
             type: "success"
           });
           this.getAddresslist();
@@ -174,7 +174,7 @@ export default {
       Default(params).then(res => {
         if (res.data.code == 0) {
           this.$message({
-            message: "Set up the success",
+            message:this.$t('m.address.tips2'),
             type: "success"
           });
           this.getAddresslist();
@@ -253,8 +253,8 @@ export default {
       cursor: pointer;
     }
     li {
-      width: 380px;
-      height: 280px;
+      min-width: 380px;
+      // height: 280px;
       border: 1px solid #ccc;
       padding: 20px 20px 26px 30px;
       box-sizing: border-box;

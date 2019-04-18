@@ -1,73 +1,214 @@
 <template>
   <div class="footer">
-    <div :class="currentClass">
-      <dl>
-        <dt class="text-uppercase">Customer Service</dt>
-        <dd>FAQ</dd>
-        <dd>Contact Us</dd>
-        <dd>Our Stores</dd>
-      </dl>
-      <dl>
-        <dt class="text-uppercase">General</dt>
-        <dd>Terms of Use</dd>
-        <dd>Terms of Sale</dd>
-        <dd>Privacy Policy</dd>
-      </dl>
-      <dl v-if="widthH>1024">
-        <dt>Subscribe to News letter</dt>
-        <dd>Please enter a valid email address.</dd>
-        <dd>
-          <input type="text" class="h_footerSearchBox" v-model="input1">
-        </dd>
-        <dd>
-          <input type="button" value="SIGN UP" class="h_footerBtnBox" @click="dingyue()">
-        </dd>
-      </dl>
-      <dl>
-        <dt>Follow Us</dt>
-        <dd>Please enter a valid email address.</dd>
-        <dd>
-          <img src="../../assets/prublic/f-hei.png" alt>
-          <img src="../../assets/prublic/in-hei.png" alt>
-          <img src="../../assets/prublic/niao-hei.png" alt>
-          <img src="../../assets/prublic/youtub8-hei.png" alt>
-          <img src="../../assets/prublic/ghei.png" alt>
-        </dd>
-      </dl>
+    <div class="head">
+      <div class="content">
+        <div class="left">
+          <span>{{$t('m.footer.input_1')}}</span>
+          <div class="input">
+            <input type="text" v-model="input1" :placeholder="$t('m.footer.input_2')">
+            <span @click="dingyue()">{{$t('m.footer.input_3')}}</span>
+          </div>
+        </div>
+        <div class="right">
+          <span>Let's be friends</span>
+          <div class="img_list">
+            <img src="../../assets/prublic/f-hei.png" alt>
+            <img src="../../assets/prublic/in-hei.png" alt>
+            <img src="../../assets/prublic/niao-hei.png" alt>
+            <img src="../../assets/prublic/youtub8-hei.png" alt>
+            <img src="../../assets/prublic/ghei.png" alt>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="h_footerTop3" v-if="widthH<1024">
-      <dl>
-        <dt>Subscribe to News letter</dt>
-        <dd>Please enter a valid email address.</dd>
-        <dd class="h_footerBox">
-          <input type="text" class="h_footerSearchBox" v-model="input1">
-          <input type="button" value="SIGN UP" class="h_footerBtnBox" @click="dingyue()">
-        </dd>
-      </dl>
+    <div class="logo1" v-if="widthH>1024">
+      <img class="logo_img" src="../../assets/prublic/logo-huangse.png" alt>
     </div>
-    <div :class="currentClass2">
-      <div class="h_footerRightCenter">
-        <img src="../../assets/prublic/logo-huangse.png" alt>
-        <span>© 2018 JMOPTICAL Eyewear. {{$t('m.music')}}</span>
+        <div class="logo2" v-else>
+      <img class="logo_img" src="../../assets/prublic/logo-huangse.png" alt>
+    </div>
+    <div class="main">
+      <div class="content">
+        <div class="head_1">
+          <div>
+            <span class="title">{{menuList[0].categoryName}}</span>
+            <span
+              v-for="(item,index) in menuList[0].cateGoryList"
+              :key="index"
+              @click="jump(item.categoryId,0)"
+            >{{item.categoryName}}</span>
+          </div>
+          <div>
+            <span class="title">{{menuList[1].categoryName}}</span>
+            <span
+              v-for="(item,index) in menuList[1].cateGoryList"
+              :key="index"
+              @click="jump(item.categoryId,1)"
+            >{{item.categoryName}}</span>
+          </div>
+          <div>
+            <span class="title">{{menuList[2].categoryName}}</span>
+            <span
+              v-for="(item,index) in menuList[2].cateGoryList"
+              :key="index"
+              @click="jump(item.categoryId,2)"
+            >{{item.categoryName}}</span>
+          </div>
+          <!-- help -->
+          <div>
+            <span class="title">Help</span>
+            <span
+              v-for="(item,index) in helpList"
+              :key="index"
+              @click="gotoHelp()"
+            >{{item.helpTitle}}</span>
+          </div>
+          <div v-if="list1[0]">
+            <span class="title">{{list1[0].linkTitle}}</span>
+            <span
+              v-for="(item,index) in list1[0].linkLabelList"
+              :key="index"
+              @click="gotoHelp2(0)"
+            >{{item.linkTitle}}</span>
+          </div>
+          <div v-if="list1[1]">
+            <span class="title">{{list1[1].linkTitle}}</span>
+            <span
+              v-for="(item,index) in list1[1].linkLabelList"
+              :key="index"
+              @click="gotoHelp2(0)"
+            >{{item.linkTitle}}</span>
+          </div>
+          <!-- <div>
+            <span class="title"></span>
+            <span>Men Eyeglasses</span>
+            <span>Women Eyeglasses</span>
+            <span>Multifocal</span>
+            <span>Rx Sunglasses</span>
+            <span>Aviator Glasses</span>
+            <span>Classic Wayframe</span>
+            <span>Round Glasses</span>
+            <span>Oval Glasses</span>
+          </div>-->
+        </div>
+        <div class="main_1" v-for="(item,index) in list2" :key="index">
+          <span class="title">{{item.linkTitle}}</span>
+          <span
+            v-for="(item2,index2) in list.linkLabelList"
+            :key="index2"
+            @click="gotoHelp3(index)"
+          >{{item2.linkTitle}}</span>
+        </div>
+        <div class="img_footer">
+          <img src="../../assets/prublic/b977bd779e37f5643bd168c50c089e6.png" alt>
+        </div>
+      </div>
+    </div>
+    <div class="footer_1">
+      <div class="content">
+        <div class="msg_1">
+          <div class="item">
+            <img src="../../assets/prublic/footer1.jpg" alt>
+            <div class="item_msg">
+              <span>{{$t('m.footer.msg_1')}}</span>
+              <span>{{$t('m.footer.msg_2')}}</span>
+            </div>
+          </div>
+          <div class="item">
+            <img src="../../assets/prublic/footer2.jpg" alt>
+            <div class="item_msg">
+              <span>{{$t('m.footer.msg_3')}}</span>
+              <span>{{$t('m.footer.msg_4')}}</span>
+            </div>
+          </div>
+          <div class="item">
+            <img src="../../assets/prublic/footer3.jpg" alt>
+            <div class="item_msg">
+              <span>{{$t('m.footer.msg_5')}}</span>
+              <span>{{$t('m.footer.msg_6')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="msg_2">{{$t('m.footer.msg_7')}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { baseUrl } from "../../baseUrl";
 import AJAX from "../../Ajax";
+import { getHelpList } from "@/Ajax/modules/myAccount";
+import { getProductCategory, getLinkLabelList } from "../../Ajax/modules/home";
 import { subscribeToNews } from "../../Ajax/modules/login";
 export default {
   data() {
     return {
       widthH: "",
-      input1: ""
+      input1: "",
+      menuList: [],
+      helpList: [],
+      list1: [], //5 6条
+      list2: [] //56条之后
     };
   },
   created() {
     this.widthH = this.$root.widthH;
+    this.getProductCategory();
+    this.getHelpList();
+    this.getLinkLabelList();
   },
   methods: {
+    //底部信息前三排
+    getProductCategory() {
+      getProductCategory().then(res => {
+        if (res.data.code == 0) {
+          this.menuList = res.data.data.cateGories;
+        }
+      });
+    },
+    //获取服务帮助信息
+    getHelpList() {
+      getHelpList().then(res => {
+        if (res.data.code == 0) {
+          this.helpList = res.data.data;
+        }
+      });
+    },
+    getLinkLabelList() {
+      getLinkLabelList().then(res => {
+        if (res.data.code == 0) {
+          localStorage.setItem("helpList", JSON.stringify(res.data.data));
+          this.list1 = res.data.data.slice(0, 2);
+          this.list2 = res.data.data.slice(2);
+          console.log(this.list1);
+          console.log(this.list2);
+        }
+      });
+    },
+    gotoHelp2(index) {
+      localStorage.setItem("helpId", index);
+      window.open(`${baseUrl}/#/myAccount/help2`);
+    },
+    gotoHelp3(index) {
+      localStorage.setItem("helpId", index+2);
+      window.open(`${baseUrl}/#/myAccount/help2`);
+    },
+    jump(id, tabId) {
+      this.index_10 = false;
+      this.bus.$emit("jump", id, tabId);
+      window.open(`${baseUrl}/#/search/${id}/${tabId}`);
+      // this.$router.push({
+      //   name: "/search",
+      //   params: {
+      //     data: id,
+      //     tabId: tabId
+      //   }
+      // });
+    },
+    gotoHelp() {
+      window.open(`${baseUrl}/#/myAccount/help`);
+    },
     dingyue() {
       let reg = /^\w+@\w+(\.[a-zA-Z]{2,3}){1,2}$/;
       if (reg.test(this.input1) == false) {
@@ -89,20 +230,6 @@ export default {
     }
   },
   computed: {
-    currentClass() {
-      if (this.widthH > 1024) {
-        return "h_footerTop1";
-      } else {
-        return "h_footerTop2";
-      }
-    },
-    currentClass2() {
-      if (this.widthH > 1024) {
-        return "h_footerBottom1";
-      } else {
-        return "h_footerBottom2";
-      }
-    },
     screenWidth() {
       return this.$root.widthH;
     }
@@ -118,177 +245,193 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
+  font-family: "regular";
   width: 100%;
-  background-color: #f4f4f4;
-  font-family: "Regular";
-}
-.h_footerTop1 {
-  padding-top: 50px;
-  padding-bottom: 40px;
-  display: flex;
-  justify-content: space-around;
-  font-weight: 600;
-  dl {
-    font-family: "Regular";
-    font-size: 14px;
-    text-align: left;
-    dt {
-      color: #231815;
-      padding-bottom: 27px;
-    }
-    dd {
-      padding-bottom: 15px;
-      color: #666666;
-      img {
-        width: 26px;
-        height: 26px;
-      }
-    }
-    .h_footerSearchBox {
-      width: 320px;
-      height: 40px;
-      border: 1px solid #000;
-      margin-top: 17px;
-    }
-    .h_footerBtnBox {
-      width: 140px;
-      height: 40px;
-      font-size: 14px;
-      color: #fff;
-      background-color: #231815;
-      border: none;
-      font-family: "Regular";
-    }
-  }
-}
-.h_footerTop2 {
-  padding: 0.5rem 0.3rem 0.4rem 0.3rem;
-  display: flex;
-  justify-content: space-around;
-  dl {
-    flex: 1;
-    font-family: "Regular";
-    font-size: 0.14rem;
-    text-align: left;
-    dt {
-      color: #231815;
-      padding-bottom: 0.27rem;
-    }
-    dd {
-      padding-bottom: 0.15rem;
-      color: #666666;
-    }
-    .h_footerBox {
-      width: 70%;
-      height: 0.42rem;
-      border: 1px solid #000;
-    }
-    .h_footerSearchBox {
-      width: 70%;
-      height: 0.4rem;
-      background-color: #fff;
-      border-right: 1px solid #000;
-    }
-    .h_footerBtnBox {
-      width: 30%;
-      height: 0.4rem;
-      background-color: #f4d925;
+  .head {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 150px;
+    background-color: #f4f4f4;
+    .content {
+      width: 11rem;
       font-size: 0.14rem;
-    }
-  }
-}
-.h_footerTop3 {
-  padding: 0rem 0.3rem;
-  dl {
-    font-family: "Regular";
-    font-size: 0.14rem;
-    text-align: left;
-    padding-bottom: 0.4rem;
-    dt {
-      color: #231815;
-      padding-bottom: 0.27rem;
-    }
-    dd {
-      margin-bottom: 0.15rem;
-      color: #666666;
-      img {
-        width: 0.26rem;
-        height: 0.26rem;
-      }
-    }
-    .h_footerBox {
-      height: 0.42rem;
-      width: 4.6rem;
-      border: 1px solid #000;
+      font-weight: bold;
       display: flex;
+      justify-content: space-around;
       align-items: center;
-    }
-    .h_footerSearchBox {
-      width: 3.2rem;
-      height: 0.42rem;
-      background-color: #fff;
-      border-right: 1px solid #000;
-      padding: 0px;
-    }
-    .h_footerBtnBox {
-      width: 1.4rem;
-      height: 0.42rem;
-      background-color: #f4d925;
-      font-size: 0.14rem;
-    }
-  }
-}
-
-/* 底部 */
-.h_footerBottom1 {
-  width: 100%;
-  height: 180px;
-  background-color: #231815;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .h_footerRightCenter {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    img {
-      width: 127px;
-      height: 45px;
-    }
-    span {
-      margin-top: 34px;
-      color: #999999;
-      font-size: 12px;
-      font-family: "Regular";
+      .left {
+        .input {
+          margin-top: 0.2rem;
+          input {
+            border: 2px solid #000000;
+            height: 0.3rem;
+            width: 2rem;
+            border-radius: .10rem;
+            padding-left: 0.2rem;
+          }
+          span {
+            background-color: #4d4d4d;
+            border-radius: .10rem;
+            color: #ffffff;
+            padding: 0.05rem 0.1rem;
+            cursor: pointer;
+          }
+          span:hover {
+            background-color: #000000;
+          }
+        }
+      }
+      .right {
+        .img_list {
+          margin-top: 0.2rem;
+        }
+        img {
+          height: 0.2rem;
+          width: 0.2rem;
+          cursor: pointer;
+        }
+      }
     }
   }
-}
-
-/* 底部2 */
-.h_footerBottom2 {
-  width: 100%;
-  height: 1.8rem;
-  background-color: #231815;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .h_footerRightCenter {
+  .logo1 {
     width: 100%;
+    background-color: #2d2d2d;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
     img {
-      width: 1.27rem;
-      height: 0.45rem;
+      height: 0.4rem;
+      width: 1rem;
+      margin: 0.2rem 0;
+      transition: all 0.3s;
     }
-    span {
-      margin-top: 0.34rem;
-      color: #999999;
-      font-size: 0.12rem;
-      font-family: "Regular";
+    img:hover {
+      transform: scale(1.2);
+    }
+  }
+    .logo2 {
+    width: 100%;
+    background-color: #2d2d2d;
+    display: flex;
+    justify-content: center;
+    img {
+      height: 0.4rem;
+      width: 1.2rem;
+      margin: 0.2rem 0;
+      transition: all 0.3s;
+    }
+    img:hover {
+      transform: scale(1.2);
+    }
+  }
+  .main {
+    padding: 0 0.2rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #2d2d2d;
+    .content {
+      width: 11rem;
+      color: #eeeeee;
+      .head_1 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        div {
+          margin-top: 0.2rem;
+          display: flex;
+          flex-direction: column;
+          font-size: .12rem;
+
+          .title {
+            font-size: .18rem;
+          }
+          span {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            transition: all 0.3s;
+          }
+          span:not(.title):hover {
+            color: #ffffff;
+
+            cursor: pointer;
+            transform: scale(1.1);
+          }
+        }
+      }
+      .main_1 {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.2rem 0;
+        margin-top: 0.2rem;
+        border-top: 2px solid #dddddd;
+        border-bottom: 2px solid #dddddd;
+        flex-wrap: wrap;
+        .title {
+          position: absolute;
+          top: -0.1rem;
+          left: 47%;
+          width: 110px;
+          background-color: #2d2d2d;
+          height: 0.3rem;
+          text-align: center;
+        }
+      }
+      .img_footer {
+        margin: 0.2rem 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        img {
+          width: 6rem;
+          height: 0.3rem;
+        }
+      }
+    }
+  }
+  .footer_1 {
+    font-size: .16rem;
+    font-weight: bold;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    .content {
+      width: 11rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .msg_1 {
+        // font-size: 20px;
+        margin: 0.2rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .item {
+          display: flex;
+          align-items: center;
+          img {
+            height: .60rem;
+            width: .7rem;
+          }
+          .item_msg {
+            display: flex;
+            flex-direction: column;
+            span:last-of-type {
+              color: #4db4e5;
+            }
+          }
+        }
+        .item:first-of-type {
+          cursor: pointer;
+        }
+      }
+      .msg_2 {
+        font-size: 0.14rem;
+      }
     }
   }
 }

@@ -1,46 +1,46 @@
 <template>
   <div :class="currentClass">
     <div class="container">
-      <div class="title_1">Select a shipping address</div>
-      <div class="title_2">Enter a new shipping address.</div>
-      <div class="title_3">When finished, click the "Continue" button.</div>
+      <div class="title_1">{{$t('m.address2.title1')}}</div>
+      <div class="title_2">{{$t('m.address2.title2')}}.</div>
+      <div class="title_3">{{$t('m.address2.title3')}}.</div>
       <el-form class="from" :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item prop="userName">
-          <el-input v-model="ruleForm.userName" placeholder="Full name"></el-input>
+          <el-input v-model="ruleForm.userName" :placeholder="$t('m.address2.placeholder1')"></el-input>
         </el-form-item>
         <el-form-item prop="addressLine1">
           <el-input
             v-model="ruleForm.addressLine1"
-            placeholder="Address line 1 (Street address, P.O. box, company name, c/o)"
+            :placeholder="$t('m.address2.placeholder2')"
           ></el-input>
         </el-form-item>
         <el-form-item prop="addressLine2">
           <el-input
             v-model="ruleForm.addressLine2"
-            placeholder="Address line 2 (Apartment, suite, unit, building, floor, etc. )"
+            :placeholder="$t('m.address2.placeholder3')"
           ></el-input>
         </el-form-item>
         <el-form-item prop="city">
-          <el-input v-model="ruleForm.city" placeholder="City"></el-input>
+          <el-input v-model="ruleForm.city" :placeholder="$t('m.address2.placeholder4')"></el-input>
         </el-form-item>
         <el-form-item prop="province">
-          <el-input v-model="ruleForm.province" placeholder="State/Province/Region"></el-input>
+          <el-input v-model="ruleForm.province" :placeholder="$t('m.address2.placeholder5')"></el-input>
         </el-form-item>
         <el-form-item prop="zipCode">
-          <el-input v-model="ruleForm.zipCode" placeholder="ZIP"></el-input>
+          <el-input v-model="ruleForm.zipCode" :placeholder="$t('m.address2.placeholder6')"></el-input>
         </el-form-item>
         <el-form-item prop="country">
-          <el-input v-model="ruleForm.country" placeholder="Country/Region: "></el-input>
+          <el-input v-model="ruleForm.country" :placeholder="$t('m.address2.placeholder7')"></el-input>
         </el-form-item>
         <el-form-item prop="userPhone">
-          <el-input v-model="ruleForm.userPhone" placeholder="Phone number"></el-input>
+          <el-input v-model="ruleForm.userPhone" :placeholder="$t('m.address2.placeholder8')"></el-input>
         </el-form-item>
         <el-form-item prop="instructions">
-          <p class="form_active">Add delivery instructions (optional)</p>
+          <p class="form_active">{{$t('m.address2.title4')}}</p>
           <el-input
             type="textarea"
             :autosize="{ minRows: 4, maxRows: 20}"
-            placeholder="Provide details such as building description, a nearby landmark,or other navigation instructions"
+            :placeholder="$t('m.address2.placeholder9')"
             v-model="ruleForm.instructions"
           ></el-input>
         </el-form-item>
@@ -57,16 +57,16 @@
           ></el-input>
         </el-form-item>-->
         <el-form-item prop="isReceivePackage">
-          <p class="form_active">Weekend delivery:</p>
+          <p class="form_active">{{$t('m.address2.title5')}}:</p>
           <el-checkbox
             v-model="isReceivePackage"
             :rules="[
       { required: true, message: '是否可以在周末交货不能为空', trigger: 'blur' },
     ]"
-          >I can receive the package on Saturday and Sunday</el-checkbox>
+          >{{$t('m.address2.title6')}}</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button class="continue" type="primary" @click="submitForm('ruleForm')">CONTINUE</el-button>
+          <el-button class="continue" type="primary" @click="submitForm('ruleForm')">{{$t('m.address2.title7')}}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -93,31 +93,31 @@ export default {
       },
       isReceivePackage: "",
       rules: {
-        userName: [{ required: true, message: "Age cannot be empty" }],
+        userName: [{ required: true, message: this.$t('m.address2.tips1')}],
         addressLine1: [
           {
             required: true,
-            message: "Street address/p.o. box cannot be empty"
+            message: this.$t('m.address2.tips2')
           }
         ],
         addressLine2: [
-          { required: true, message: "Apartment suite cannot be empty" }
+          { required: true, message: this.$t('m.address2.tips3') }
         ],
-        city: [{ required: true, message: "Cities cannot be empty" }],
+        city: [{ required: true, message: this.$t('m.address2.tips4') }],
         province: [
-          { required: true, message: "State/province cannot be empty" }
+          { required: true, message: this.$t('m.address2.tips5') }
         ],
-        zipCode: [{ required: true, message: "The zip code cannot be empty" }],
-        country: [{ required: true, message: "The country cannot be empty" }],
+        zipCode: [{ required: true, message: this.$t('m.address2.tips6') }],
+        country: [{ required: true, message: this.$t('m.address2.tips7') }],
         userPhone: [
           {
             required: true,
-            message: "Consignee's telephone number cannot be empty"
+            message: this.$t('m.address2.tips8')
           }
         ]
       },
       userInfo: {},
-      widthH:''
+      widthH: ""
     };
   },
   created() {

@@ -1,35 +1,35 @@
 <template>
   <div class="ell-bac">
     <div class="ell-container">
-       <router-link to="/index/home">
-        <span class="back">Back home</span>
+       <router-link to="./">
+        <span class="back">{{$t('m.Register.title1')}}</span>
       </router-link>
-      <router-link to="/index/home">
+      <router-link to="./">
         <img class="ell-logImg" src="../../../assets/login/logo.png" alt>
       </router-link>
-      <div class="ell-b">Sign up</div>
-      <div class="ell-we">Welcome to Jmoptical</div>
+      <div class="ell-b">{{$t('m.Register.title2')}}</div>
+      <div class="ell-we">{{$t('m.Register.title3')}}</div>
       <div class="ell-btn">
-        <button @click="facebook">SIGN IN WITH FACEBOOK</button>
-        <button @click="google">SIGN IN WITH GOOGLE</button>
+        <!-- <button @click="facebook">SIGN IN WITH FACEBOOK</button>
+        <button @click="google">SIGN IN WITH GOOGLE</button> -->
       </div>
       <div v-if="show" class="ell-prompt" v-html="errTxt"></div>
-      <input type="text" placeholder="First Name" v-model="firstName">
-      <input type="text" placeholder="Last Name" v-model="lastName">
-      <input type="text" placeholder="Email Name" v-model="email">
+      <input type="text" :placeholder="$t('m.Register.placeholder1')" v-model="firstName">
+      <input type="text" :placeholder="$t('m.Register.placeholder2')" v-model="lastName">
+      <input type="text" :placeholder="$t('m.Register.placeholder3')" v-model="email">
       <div class="code-box">
-        <input type="text" placeholder="Verification Code" v-model="code">
+        <input type="text" :placeholder="$t('m.Register.placeholder4')" v-model="code">
         <span @click="emailClick">{{codeTime}}</span>
       </div>
-      <input type="password" placeholder="Password" v-model="password">
-      <input type="password" placeholder="Confirm Password" v-model="confirmPas">
+      <input type="password" :placeholder="$t('m.Register.placeholder5')" v-model="password">
+      <input type="password" :placeholder="$t('m.Register.placeholder6')" v-model="confirmPas">
       <div class="agreement-box">
-        <el-checkbox v-model="checked">sign up for newsletter</el-checkbox>
+        <el-checkbox v-model="checked">{{$t('m.Register.title4')}}</el-checkbox>
       </div>
 
-      <button class="ell-sign" @click="signIn">SIGN UP</button>
+      <button class="ell-sign" @click="signIn">{{$t('m.Register.title5')}}</button>
     </div>
-    <div class="ell-bq">©️2018 JMOPTICAL Eyewear</div>
+    <div class="ell-bq">{{$t('m.Register.title6')}}</div>
   </div>
 </template>
 
@@ -68,11 +68,11 @@ export default {
           });
         } else {
           this.show = true;
-          this.errTxt += `Email is not a valid email address.`;
+          this.errTxt += this.$t('m.Register.tips1');
         }
       } else {
         this.show = true;
-        this.errTxt += `Do not submit repeatedly.`;
+        this.errTxt += this.$t('m.Register.tips2');
       }
     },
     //倒计时
@@ -84,7 +84,7 @@ export default {
         if (data == 0) {
           clearInterval(time);
           that.codeFlag = true;
-          that.codeTime = "Send";
+          that.codeTime = this.$t('m.Register.tips3');
         }
       }, 1000);
     },
@@ -95,61 +95,61 @@ export default {
       this.show = false;
       if (!this.firstName.trim()) {
         this.show = true;
-        this.errTxt += `"First Name" is a required value.<br>`;
+        this.errTxt += this.$t('m.Register.tips4');
       }
       if (this.firstName.length < 1) {
         this.show = true;
-        this.errTxt += `"First Name" length must be equal or greater than 1 characters.<br>`;
+        this.errTxt += this.$t('m.Register.tips5');
       }
       if (!this.lastName.trim()) {
         this.show = true;
-        this.errTxt += `"Last Name" is a required value.<br>`;
+        this.errTxt += this.$t('m.Register.tips6');
       }
       if (this.lastName.length < 1) {
         this.show = true;
-        this.errTxt += `"Last Name" length must be equal or greater than 1 characters.<br>`;
+        this.errTxt += this.$t('m.Register.tips7');
       }
       if (!this.email.trim()) {
         this.show = true;
-        this.errTxt += `"Email" is a required value.<br>`;
+        this.errTxt += this.$t('m.Register.tips8');
       } else if (this.reg.test(this.email) == false) {
         this.show = true;
-        this.errTxt += `Email is not a valid email address`;
+        this.errTxt += this.$t('m.Register.tips9');
       }
       if (!this.code.trim()) {
         this.show = true;
-        this.errTxt += `Please input the password`;
+        this.errTxt += this.$t('m.Register.tips10');
       } else if (this.codeReg.test(this.code) == false) {
         this.show = true;
-        this.errTxt += `Please enter 4-digit verification code`;
+        this.errTxt += this.$t('m.Register.tips11');
       }
       if (!this.checked) {
         this.show = true;
-        this.errTxt += `Please read the user agreement first`;
+        this.errTxt += this.$t('m.Register.tips12');
       }
       if (!this.show) {
         if (!this.password.trim()) {
           this.show = true;
-          this.errTxt += `The password cannot be empty`;
+          this.errTxt += this.$t('m.Register.tips13');
         }
       }
       if (!this.show) {
         if (!this.confirmPas.trim() || this.confirmPas !== this.password) {
           this.show = true;
-          this.errTxt += `Please make sure your passwords match.`;
+          this.errTxt += this.$t('m.Register.tips14');
         }
       }
        if (!this.show) {
           var reg=/^[0-9]*$/ 
           if(reg.test(this.password)){
           this.show = true;
-          this.errTxt += `Passwords can't be all Numbers`;
+          this.errTxt += this.$t('m.Register.tips15');
           }
       }
           if (!this.show) {
           if(this.password.length<6){
           this.show = true;
-          this.errTxt += `Password state is less than 6 bits`;
+          this.errTxt += this.$t('m.Register.tips16');
           }
       }
       if (!this.show) {
@@ -164,7 +164,7 @@ export default {
           if (response.data.code == 0) {
             this.setToken(response.data.data.token);
             this.setUserId(response.data.data.userId);
-            this.$router.push("./");
+            this.$router.push("/");
           }
         });
       }
